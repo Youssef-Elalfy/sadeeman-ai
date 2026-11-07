@@ -1,0 +1,258 @@
+{
+  "projectRef": "ujdzysbowngtkwndgoqf",
+  "frontendUrl": "https://sadeeman-ai-youssef-elalfys-projects.vercel.app",
+  "startedAt": "2026-11-07T14:21:20.867Z",
+  "completedAt": "2026-11-07T14:26:20.960Z",
+  "identitiesCreated": 1,
+  "disposableUserId": "92ccd881-60f2-4189-b3dd-05bf712d89ce",
+  "stages": {
+    "research": {
+      "status": "passed",
+      "clientRequestId": "cc0947fd-19d6-426a-8a26-e98ab5a2e8fc",
+      "runId": "d02ad760-66ab-4212-b4fe-2b88ebcbca82",
+      "sseStatus": 200,
+      "sequence": [
+        {
+          "type": "run_started"
+        },
+        {
+          "type": "model_processing"
+        },
+        {
+          "type": "tool_started",
+          "tool": "research_destination"
+        },
+        {
+          "type": "tool_completed",
+          "tool": "research_destination",
+          "code": "ok"
+        },
+        {
+          "type": "model_processing"
+        },
+        {
+          "type": "response_completed"
+        }
+      ],
+      "usage": {
+        "inputTokens": 8073,
+        "outputTokens": 127
+      },
+      "providerFailures": [],
+      "tracePersisted": true,
+      "answerPresent": true,
+      "answerSha256": "1fcb1124deddc82053ad24d715301674326b0a9f6ba6e330cf4fcfffe79bab9c",
+      "sources": [
+        {
+          "url": "https://www.japan.travel/en/us",
+          "title": "JNTO - Official Tourism Guide for Japan Travel",
+          "retrievedAt": "2026-11-07T14:21:46.117Z",
+          "publicationEstimateAt": null,
+          "publicationDateBasis": "provider_estimate_or_unknown",
+          "authority": "official_tourism",
+          "urlBasis": "search_provider_url_not_publisher_canonical_verified"
+        },
+        {
+          "url": "https://www.kyototourism.org/en",
+          "title": "Another Kyoto Official Travel Guide",
+          "retrievedAt": "2026-11-07T14:21:46.117Z",
+          "publicationEstimateAt": "2026-08-12T00:00:00.000Z",
+          "publicationDateBasis": "provider_estimate_or_unknown",
+          "authority": "publisher",
+          "urlBasis": "search_provider_url_not_publisher_canonical_verified"
+        },
+        {
+          "url": "https://www.japan-guide.com/e/e2158.html",
+          "title": "Kyoto Travel Guide - What to do in Kyoto City",
+          "retrievedAt": "2026-11-07T14:21:46.117Z",
+          "publicationEstimateAt": "2025-10-29T00:00:00.000Z",
+          "publicationDateBasis": "provider_estimate_or_unknown",
+          "authority": "publisher",
+          "urlBasis": "search_provider_url_not_publisher_canonical_verified"
+        }
+      ],
+      "attributionVerified": true
+    },
+    "image": {
+      "status": "passed",
+      "proofSha256": "bd498b20ae52b99ac761599d4eb4e8353548ec8113ef10e88bf2cba3d900773c",
+      "mime": "image/png",
+      "bytes": 14478,
+      "runId": "b669a419-28e2-41b8-a6dd-bf7684750d80",
+      "browserPayloadVerified": true,
+      "sseStatus": 200,
+      "sequence": [
+        {
+          "type": "run_started"
+        },
+        {
+          "type": "model_processing"
+        },
+        {
+          "type": "response_completed"
+        }
+      ],
+      "usage": {
+        "inputTokens": 6441,
+        "outputTokens": 13
+      },
+      "providerFailures": [],
+      "tracePersisted": true,
+      "answerPresent": true,
+      "answerSha256": "bd498b20ae52b99ac761599d4eb4e8353548ec8113ef10e88bf2cba3d900773c",
+      "sources": [
+        {
+          "url": "https://www.japan.travel/en/us",
+          "title": "JNTO - Official Tourism Guide for Japan Travel",
+          "retrievedAt": "2026-11-07T14:21:46.117Z",
+          "publicationEstimateAt": null,
+          "publicationDateBasis": "provider_estimate_or_unknown",
+          "authority": "official_tourism",
+          "urlBasis": "search_provider_url_not_publisher_canonical_verified"
+        },
+        {
+          "url": "https://www.kyototourism.org/en",
+          "title": "Another Kyoto Official Travel Guide",
+          "retrievedAt": "2026-11-07T14:21:46.117Z",
+          "publicationEstimateAt": "2026-08-12T00:00:00.000Z",
+          "publicationDateBasis": "provider_estimate_or_unknown",
+          "authority": "publisher",
+          "urlBasis": "search_provider_url_not_publisher_canonical_verified"
+        },
+        {
+          "url": "https://www.japan-guide.com/e/e2158.html",
+          "title": "Kyoto Travel Guide - What to do in Kyoto City",
+          "retrievedAt": "2026-11-07T14:21:46.117Z",
+          "publicationEstimateAt": "2025-10-29T00:00:00.000Z",
+          "publicationDateBasis": "provider_estimate_or_unknown",
+          "authority": "publisher",
+          "urlBasis": "search_provider_url_not_publisher_canonical_verified"
+        }
+      ],
+      "fileContentVerified": true
+    },
+    "pdf": {
+      "status": "passed",
+      "proofSha256": "7e3073a37115d0eb3d9cf5f5ef7063eb9e8c1ec75d238b846cfa25a99bb4f941",
+      "mime": "application/pdf",
+      "bytes": 596,
+      "runId": "b2185682-bc47-4327-93a0-cab94e3c8aa0",
+      "browserPayloadVerified": true,
+      "sseStatus": 200,
+      "sequence": [
+        {
+          "type": "run_started"
+        },
+        {
+          "type": "model_processing"
+        },
+        {
+          "type": "response_completed"
+        }
+      ],
+      "usage": {
+        "inputTokens": 5948,
+        "outputTokens": 10
+      },
+      "providerFailures": [],
+      "tracePersisted": true,
+      "answerPresent": true,
+      "answerSha256": "7e3073a37115d0eb3d9cf5f5ef7063eb9e8c1ec75d238b846cfa25a99bb4f941",
+      "sources": [
+        {
+          "url": "https://www.japan.travel/en/us",
+          "title": "JNTO - Official Tourism Guide for Japan Travel",
+          "retrievedAt": "2026-11-07T14:21:46.117Z",
+          "publicationEstimateAt": null,
+          "publicationDateBasis": "provider_estimate_or_unknown",
+          "authority": "official_tourism",
+          "urlBasis": "search_provider_url_not_publisher_canonical_verified"
+        },
+        {
+          "url": "https://www.kyototourism.org/en",
+          "title": "Another Kyoto Official Travel Guide",
+          "retrievedAt": "2026-11-07T14:21:46.117Z",
+          "publicationEstimateAt": "2026-08-12T00:00:00.000Z",
+          "publicationDateBasis": "provider_estimate_or_unknown",
+          "authority": "publisher",
+          "urlBasis": "search_provider_url_not_publisher_canonical_verified"
+        },
+        {
+          "url": "https://www.japan-guide.com/e/e2158.html",
+          "title": "Kyoto Travel Guide - What to do in Kyoto City",
+          "retrievedAt": "2026-11-07T14:21:46.117Z",
+          "publicationEstimateAt": "2025-10-29T00:00:00.000Z",
+          "publicationDateBasis": "provider_estimate_or_unknown",
+          "authority": "publisher",
+          "urlBasis": "search_provider_url_not_publisher_canonical_verified"
+        }
+      ],
+      "fileContentVerified": true
+    },
+    "voice": {
+      "status": "passed",
+      "tts": {
+        "status": 200,
+        "bytes": 113324,
+        "provider": "gemini",
+        "realWave": true
+      },
+      "stt": {
+        "status": 200,
+        "provider": "groq",
+        "textPresent": true,
+        "textSha256": "796cfc04647af1b4d3b56f84485024089fc8ff1d1eab5a53274baa60c485de06"
+      }
+    }
+  },
+  "actualProviderUsage": {
+    "chatVisionGenerations": 4,
+    "basicTavilySearches": 1,
+    "geminiTtsRequests": 1,
+    "groqSttRequests": 1,
+    "openrouterRequests": 0
+  },
+  "cleanup": {
+    "ownConversationsDeleted": true,
+    "appSessionRevoked": true,
+    "revokedTokenStatus": 401,
+    "authLocalSignOutAccepted": true,
+    "staleRefreshStatus": 400,
+    "staleRefreshCode": "refresh_token_not_found",
+    "encryptedCredentialsErased": true,
+    "authUserDeletion": "owner_confirmed_deleted",
+    "independentAbsenceCheck": {
+      "status": "blocked",
+      "category": "SUPABASE_SQL_TOOL_UNAVAILABLE",
+      "queryExecuted": false
+    }
+  },
+  "cleanupHarnessDiagnostic": {
+    "reason": "Auth response has numeric code and string error_code; corrected local field selection",
+    "nonSensitiveEnvelope": {
+      "status": 400,
+      "keys": [
+        "code",
+        "error_code",
+        "msg"
+      ],
+      "errorCategory": "refresh_token_not_found"
+    }
+  },
+  "priorFixtureCleanup": {
+    "userId": "6ee07be3-69b5-41cd-b388-d8a382be0d50",
+    "status": "all_listed_auth_application_storage_counts_zero_independently_verified_owner_reported"
+  },
+  "migration": {
+    "approvedVersion": "20261107135209",
+    "executionVersion": "20261107141313",
+    "sha256": "4EE7C520B99595F5537D3611CD336AC3E81A0E54B8BE40C4646D7F09CB969602",
+    "status": "applied_and_registered_independently_verified_owner_reported",
+    "replayed": false
+  },
+  "functionalAcceptance": "PASSED",
+  "independentFinalCleanupGate": "EXTERNALLY_BLOCKED",
+  "noAdditionalLiveTestingAuthorized": true,
+  "productionCodeChanged": false,
+  "redeployed": false
+}

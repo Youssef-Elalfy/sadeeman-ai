@@ -15,10 +15,12 @@
     }
   },
   "localTests": {
-    "passed": 429,
-    "total": 429,
-    "files": 34,
-    "command": "node node_modules/vitest/vitest.mjs run --maxWorkers=1"
+    "passed": 438,
+    "total": 438,
+    "files": 35,
+    "command": "node node_modules/vitest/vitest.mjs run --maxWorkers=1",
+    "evidenceReused": true,
+    "rerunForFinalization": false
   },
   "publicChecks": [
     {
@@ -120,15 +122,12 @@
     "readOnlyVerified": true
   },
   "remaining": [
-    "Interrupted public test guest cleanup: 6ee07be3-69b5-41cd-b388-d8a382be0d50",
-    "Authenticated browser history rendering",
-    "One basic Tavily search and company-catalog tool execution",
-    "Real public image/PDF turns",
-    "Groq transcription and Gemini TTS",
-    "Provider fallback failures covered offline; no intentional production outage injected"
+    "Independent final test-guest absence counts: SQL tool unavailable; exact guest deletion confirmed by owner."
   ],
-  "fullAcceptance": "OPEN",
+  "fullAcceptance": "FUNCTIONAL_PASSED_INDEPENDENT_FINAL_CLEANUP_VERIFICATION_BLOCKED",
   "providerCallsRepeatedOnResume": 0,
   "paidPlansEnabled": false,
-  "supabaseSchemasChanged": false
+  "supabaseSchemasChanged": false,
+  "remainingLiveEvidence": "docs/reports/PRODUCTION_REMAINING_LIVE_ACCEPTANCE_2026-11-07.json",
+  "readinessReport": "docs/reports/PRODUCTION_READINESS_FINAL_2026-11-07.md"
 }

@@ -1,5 +1,18 @@
 {
   "projectRef": "ujdzysbowngtkwndgoqf",
+  "accountDeletionAuditBoundary": {
+    "approvedVersion": "20261107135209",
+    "cloudExecutionVersion": "20261107141313",
+    "approvedFile": "proposed/20261107135209_account_deletion_audit_boundary.sql",
+    "sha256": "4EE7C520B99595F5537D3611CD336AC3E81A0E54B8BE40C4646D7F09CB969602",
+    "cloudDeployment": "applied_and_registered_independently_verified_owner_reported",
+    "mustNotReplayOnCloud": true,
+    "disposableGuestCleanup": {
+      "userId": "6ee07be3-69b5-41cd-b388-d8a382be0d50",
+      "status": "all_listed_auth_application_and_storage_records_zero_independently_verified_owner_reported"
+    },
+    "note": "Approved source retained byte-for-byte; execution-version mapping is documentation, not a history repair or another migration."
+  },
   "sessionBoundary": {
     "version": "20261105154454",
     "file": "20261105154454_session_boundary_hardening.sql",
@@ -37,6 +50,11 @@
     "status": "retired_by_owner_scope_correction_2026_11_06"
   },
   "existingVersionMappings": [
+    {
+      "local": "20261107135209",
+      "cloud": "20261107141313",
+      "name": "account_deletion_audit_boundary"
+    },
     {
       "local": "20261104232715",
       "cloud": "20261105005039",
