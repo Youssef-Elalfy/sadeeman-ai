@@ -131,7 +131,7 @@ export function Workspace() {
           return;
         }
         setHealth(null);
-        setError("الخادم المحلي مش متصل. شغّل خدمة SADEEMAN وحاول تاني.");
+        setError("مش قادرين نتصل بالخدمة دلوقتي. حدّث الصفحة أو جرّب كمان شوية.");
       }
     },
     [establish],

@@ -4,12 +4,14 @@
 
 ## Public application
 
-- Frontend: https://sadeeman-ai-youssef-elalfys-projects.vercel.app
+- Frontend (canonical): https://sadeeman-ai.vercel.app
 - Backend health: https://sadeeman-api-production.up.railway.app/api/v1/health
 - Private repository: https://github.com/Youssef-Elalfy/sadeeman-ai
 - Deployed application source: `45b91a5e14716a2345ea61df1a0dfb8c720c9ce8`.
 - Vercel deployment: `dpl_GaHJ4eaCg1JC1U92uLVUvtFt43FQ` (READY in deployment evidence).
 - Railway deployment: `030fc632-45f4-4d27-ac23-623f3dfdc023` (SUCCESS, one replica in deployment evidence).
+
+Later routing correction: Railway deployment `9b374210-d2a9-450c-99bd-d9b4e965d0b8` successfully activated WEB_ORIGIN=`https://sadeeman-ai.vercel.app` using the same image. Canonical preflight/API traffic now succeeds. The necessary frontend redirect/error-copy release is awaiting Vercel sign-in; see `PRODUCTION_ORIGIN_HOTFIX_2026-11-07.md`. The feature evidence below was collected on the original team-suffixed alias and is retained as historical evidence.
 
 No application source, runtime settings, credentials, schema or deployment was changed during final acceptance/documentation. No new users or live tests were created/run after the owner's final stop instruction. This report reuses earlier successful reachability, CORS, auth rejection, desktop/mobile, chat, SSE and database-persistence evidence; it does not claim a new availability probe.
 

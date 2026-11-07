@@ -71,7 +71,7 @@ export function headers(): Record<string, string> {
 export function failureMessage(status: number, code: string): string {
   switch (code) {
     case "FORBIDDEN_ORIGIN":
-      return "عنوان الصفحة مش متطابق مع إعدادات الخادم المحلي. افتح التطبيق من العنوان اللي طبعه أمر التشغيل، أو حدّث WEB_ORIGIN في ملف ‎.env‎.";
+      return "العنوان ده مش معتمد. افتح سَدِيمًا من https://sadeeman-ai.vercel.app وحاول تاني.";
     case "RATE_LIMITED":
     case "CAPACITY":
       return "طلبات كتير في وقت قصير. استنى دقيقة وجرّب تاني.";
