@@ -111,7 +111,8 @@ export function VoicePanel({
           );
         }
       })
-           .catch(() => undefined);    return () => {
+      .catch(() => undefined);
+    return () => {
       abort.abort();
       cancelled.current = true;
       controller.current?.abort();

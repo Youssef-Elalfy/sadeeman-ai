@@ -37,7 +37,7 @@ try {
   const report = startupReport(config);
   process.stdout.write(
     [
-      `SADEEMAN AI API ready: http://127.0.0.1:${config.PORT}/api/v1/health`,
+      `SADEEMAN AI API ready on ${config.NODE_ENV === "production" ? "0.0.0.0" : "127.0.0.1"}:${config.PORT}`,
       ...report.lines,
       ...report.warnings.map((warning) => `  ! ${warning}`),
       "",
@@ -49,7 +49,7 @@ try {
     });
 } catch {
   process.stderr.write(
-    "Unable to start the local API. Is port 4000 already in use (an older API window still open)? Also check .env.\n",
+    "Unable to start API; check configured PORT, database connectivity and environment settings.\n",
   );
   process.exitCode = 1;
 }

@@ -54,6 +54,10 @@ const Env = z.object({
   ALLOW_CATALOG_DEMO: flag("false"),
   MAX_SEARCH_CALLS_PER_TURN: integer(2, 1, 4),
   MAX_SEARCH_REQUESTS_PER_HOUR: integer(20, 1, 100),
+  MAX_AGENT_REQUESTS_PER_HOUR: integer(30, 1, 60),
+  MAX_VOICE_REQUESTS_PER_HOUR: integer(30, 1, 60),
+  MAX_GUESTS_PER_HOUR: integer(10, 1, 20),
+  MAX_CONCURRENT_PROVIDER_OPERATIONS: integer(2, 1, 4),
   MAX_AGENT_TOOL_ROUNDS: integer(5, 1, 5),
   MAX_TOOL_CALLS_PER_TURN: integer(12, 1, 20),
   MODEL_TIMEOUT_MS: integer(15000, 50, 30000),
@@ -72,10 +76,37 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     throw new Error(
       `Invalid environment fields: ${[...new Set(parsed.error.issues.map((i) => i.path[0]))].join(", ")}`,
     );
-  if (parsed.data.NODE_ENV === "production")
-    throw new Error(
-      "Production is disabled until durable auth, RLS and privacy gates pass.",
-    );
+  if (parsed.data.NODE_ENV === "production") {
+    const c = parsed.data;
+    const origin = new URL(c.WEB_ORIGIN);
+    const model = (value: string) =>
+      Boolean(value.trim()) && !value.includes("CHECK_");
+    // This is an enforced release boundary, not an environment-variable bypass.
+    // Session/RLS deployment and disposable-user cleanup evidence is retained
+    // in docs/reports/PRODUCTION_SESSION_CLAIMS_2026-11-07.json.
+    if (
+      c.PERSISTENCE_MODE !== "supabase" ||
+      origin.protocol !== "https:" ||
+      origin.origin !== c.WEB_ORIGIN ||
+      !origin.hostname.endsWith(".vercel.app") ||
+      !c.ENABLE_SUPABASE_GUEST ||
+      !c.ENABLE_REAL_PROVIDER ||
+      c.MODEL_PROVIDER !== "gemini" ||
+      c.FALLBACK_PROVIDERS.trim() !== "groq" ||
+      !c.GEMINI_API_KEY.trim() ||
+      !model(c.GEMINI_MODEL) ||
+      !c.GROQ_API_KEY.trim() ||
+      !model(c.GROQ_MODEL) ||
+      c.ENABLE_OPENROUTER_RUNTIME ||
+      c.ALLOW_CATALOG_DEMO ||
+      c.ALLOW_SYNTHETIC_PROVIDER_DATA ||
+      c.PROVIDER_RETRIES !== 0 ||
+      (c.ENABLE_TRAVEL_RESEARCH && !c.TAVILY_API_KEY.trim())
+    )
+      throw new Error(
+        "Production guard: durable Sadeeman auth, HTTPS, real Gemini/Groq and safe provider settings are required",
+      );
+  }
   if (parsed.data.RATE_LIMIT_MAX > 120 && parsed.data.NODE_ENV !== "test")
     throw new Error(
       "RATE_LIMIT_MAX above 120 is allowed only in NODE_ENV=test",

@@ -1,6 +1,6 @@
 {
   "projectRef": "ujdzysbowngtkwndgoqf",
-  "status": "checks_passed_owner_cleanup_pending",
+  "status": "checks_passed_cleanup_verified",
   "disposableUserId": "005eeacb-9800-4b00-8174-1e57eb1c57f0",
   "createdAtUtc": "2026-11-07T02:11:41.9581Z",
   "anonymous": true,
@@ -21,8 +21,10 @@
   "activeRefreshTokens": 0,
   "ownedApplicationRecords": { "conversations": 0, "consents": 0, "memories": 0, "messages": 0, "turns": 0, "travelProfiles": 0 },
   "localTokenMaterialErased": true,
+  "ownerDeletionConfirmed": true,
+  "readOnlyCleanupVerification": { "remainingUsers": 0, "remainingSessions": 0, "remainingRefreshTokens": 0 },
   "productionGuardEnabled": true,
   "scope": "New identity created and signed out through supported Supabase Auth API; claims tested as authenticated in a READ ONLY transaction followed by ROLLBACK. No Auth table edits, application data writes, existing-user modifications, migrations or schema changes.",
-  "limits": ["Expired JWT claims were exercised in the deployed SQL validator, not by forging a signed expired JWT.", "Auth sessions.not_after was not modified to simulate row expiry.", "Final identity deletion must be performed by the owner in Supabase Authentication > Users, then verified read-only."],
+  "limits": ["Expired JWT claims were exercised in the deployed SQL validator, not by forging a signed expired JWT.", "Auth sessions.not_after was not modified to simulate row expiry."],
   "harnessCorrections": ["An initial baseline read used an obsolete RPC name; corrected to the application's sadeeman_operation without creating a second identity.", "Sign-out succeeded; an overly narrow raw HTTP-status assertion was corrected by confirming canonical RPC UNAUTHORIZED, false wrapper result, absent session and production-adapter HTTP 401."]
 }

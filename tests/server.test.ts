@@ -336,7 +336,7 @@ describe("session lifecycle and local-only config", () => {
   });
   it("fails closed in production and sanitizes invalid environment errors", () => {
     expect(() => loadConfig({ NODE_ENV: "production" })).toThrow(
-      "Production is disabled",
+      "Production guard",
     );
     expect(() => loadConfig({ PORT: "secret-marker" })).toThrow(
       "Invalid environment fields: PORT",

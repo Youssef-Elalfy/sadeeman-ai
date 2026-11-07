@@ -11,6 +11,7 @@ import { Repository } from "./persistence/repository.js";
 import { registerPersistenceRoutes } from "./persistence/routes.js";
 import { createPersistence } from "./persistence/supabase.js";
 import type { Identity, Persistence } from "./persistence/types.js";
+import { ProviderAdmission } from "./provider-admission.js";
 import { createRouter, type ModelRouter } from "./providers/router.js";
 import { TravelIntelligence } from "./research/travel.js";
 import { LocalState } from "./state.js";
@@ -48,6 +49,14 @@ export async function buildServer(
 ) {
   const config = options.config ?? loadConfig();
   const state = options.state ?? new LocalState();
+  const admission = new ProviderAdmission(
+    {
+      agent: config.MAX_AGENT_REQUESTS_PER_HOUR,
+      voice: config.MAX_VOICE_REQUESTS_PER_HOUR,
+      guest: config.MAX_GUESTS_PER_HOUR,
+    },
+    config.MAX_CONCURRENT_PROVIDER_OPERATIONS,
+  );
   const persistence = options.persistence ?? (await createPersistence(config));
   const runtime = new AgentRuntime(
     options.router ?? createRouter(config),
@@ -154,8 +163,9 @@ export async function buildServer(
     principal,
     (ownerId) => state.cancelOwner(ownerId),
     config,
+    admission,
   );
-  registerVoice(app, new VoiceService(config), principal);
+  registerVoice(app, new VoiceService(config), principal, admission);
   app.get("/api/v1/providers", async (request) => {
     await principal(request.headers.authorization);
     return runtime.providerStatuses();
@@ -184,6 +194,7 @@ export async function buildServer(
     dataMode: dataMode(config),
   }));
   app.post("/api/v1/dev/sessions", async (request, reply) => {
+    if (config.NODE_ENV === "production") throw new SafeError("NOT_FOUND", 404);
     // This entrypoint grants local synthetic dev access, never a production identity.
     if (!["127.0.0.1", "::1", "::ffff:127.0.0.1"].includes(request.ip))
       throw new SafeError("UNAUTHORIZED", 403);
@@ -307,7 +318,14 @@ export async function buildServer(
         return reply.code(503).send({ error: "DISCONNECTED", retryable: true });
       // All errors become safe terminal events inside runtime; no synthetic replies.
       const memories = await repository?.memories();
-      const run = state.createRun(conversation);
+      const release = admission.acquire("agent");
+      let run: ReturnType<LocalState["createRun"]>;
+      try {
+        run = state.createRun(conversation);
+      } catch (error) {
+        release();
+        throw error;
+      }
       const context = record
         ? JSON.stringify({
             summaryKind: record.summaryKind,
@@ -315,49 +333,51 @@ export async function buildServer(
             optedInPreferences: memories ?? [],
           }).slice(0, 6000)
         : undefined;
-      void runtime.execute(
-        run,
-        conversation,
-        body.content,
-        body.locale,
-        repository
-          ? {
-              persistent: true,
-              identity,
-              beforeComplete: async (answer) => {
-                await repository.commit(
-                  conversation.id,
-                  requestId,
-                  run.id,
-                  body.content,
-                  answer,
-                  run.usage,
-                  run.toolExecutions,
-                  config.ENABLE_TRAVEL_CONTEXT_PERSISTENCE &&
-                    run.travelTurn?.dirty
-                    ? {
-                        state: {
-                          ...run.travelTurn.draft,
-                          version: run.travelTurn.base.version + 1,
-                        },
-                        expectedVersion: run.travelTurn.base.version,
-                      }
-                    : undefined,
-                );
-                run.tracePersisted = true;
-              },
-              afterFailure: async () => {
-                await repository.saveTools(
-                  conversation.id,
-                  run.id,
-                  run.toolExecutions,
-                );
-              },
-              ...(context ? { context } : {}),
-              ...(attachments.length ? { attachments } : {}),
-            }
-          : { identity, ...(attachments.length ? { attachments } : {}) },
-      );
+      void runtime
+        .execute(
+          run,
+          conversation,
+          body.content,
+          body.locale,
+          repository
+            ? {
+                persistent: true,
+                identity,
+                beforeComplete: async (answer) => {
+                  await repository.commit(
+                    conversation.id,
+                    requestId,
+                    run.id,
+                    body.content,
+                    answer,
+                    run.usage,
+                    run.toolExecutions,
+                    config.ENABLE_TRAVEL_CONTEXT_PERSISTENCE &&
+                      run.travelTurn?.dirty
+                      ? {
+                          state: {
+                            ...run.travelTurn.draft,
+                            version: run.travelTurn.base.version + 1,
+                          },
+                          expectedVersion: run.travelTurn.base.version,
+                        }
+                      : undefined,
+                  );
+                  run.tracePersisted = true;
+                },
+                afterFailure: async () => {
+                  await repository.saveTools(
+                    conversation.id,
+                    run.id,
+                    run.toolExecutions,
+                  );
+                },
+                ...(context ? { context } : {}),
+                ...(attachments.length ? { attachments } : {}),
+              }
+            : { identity, ...(attachments.length ? { attachments } : {}) },
+        )
+        .finally(release);
       return reply.code(202).send({
         runId: run.id,
         conversationId: conversation.id,

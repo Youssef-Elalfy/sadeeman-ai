@@ -626,58 +626,60 @@ export function Workspace() {
             />
           )}
           <ul className="history-list" aria-labelledby="history-title">
-{historyMatches.map((h) => (
-  <li key={h.id} className="history-item">
-    <button
-      type="button"
-      className={`history-open ${conversation === h.id ? "active" : ""}`}
-      aria-current={conversation === h.id ? "true" : undefined}
-      disabled={busy}
-      onClick={() => void openConversation(h.id)}
-    >
-      <span className="history-name" title={titles[h.id]}>
-        {titles[h.id] ?? "محادثة بدون عنوان"}
-      </span>
+            {historyMatches.map((h) => (
+              <li key={h.id} className="history-item">
+                <button
+                  type="button"
+                  className={`history-open ${conversation === h.id ? "active" : ""}`}
+                  aria-current={conversation === h.id ? "true" : undefined}
+                  disabled={busy}
+                  onClick={() => void openConversation(h.id)}
+                >
+                  <span className="history-name" title={titles[h.id]}>
+                    {titles[h.id] ?? "محادثة بدون عنوان"}
+                  </span>
 
-      <span className="history-date">
-        {new Date(h.createdAt).toLocaleDateString("ar-EG", {
-          day: "numeric",
-          month: "short",
-        })}
-      </span>
-    </button>
+                  <span className="history-date">
+                    {new Date(h.createdAt).toLocaleDateString("ar-EG", {
+                      day: "numeric",
+                      month: "short",
+                    })}
+                  </span>
+                </button>
 
-    <button
-      type="button"
-      className="history-delete"
-      aria-label={`حذف ${titles[h.id] ?? "المحادثة"}`}
-      title="حذف المحادثة"
-      disabled={busy}
-      onClick={() => {
-        if (!window.confirm("متأكد إنك عايز تحذف المحادثة دي نهائيًا؟")) {
-          return;
-        }
+                <button
+                  type="button"
+                  className="history-delete"
+                  aria-label={`حذف ${titles[h.id] ?? "المحادثة"}`}
+                  title="حذف المحادثة"
+                  disabled={busy}
+                  onClick={() => {
+                    if (
+                      !window.confirm("متأكد إنك عايز تحذف المحادثة دي نهائيًا؟")
+                    ) {
+                      return;
+                    }
 
-        void guarded(async () => {
-          await api(
-            `/conversations/${h.id}`,
-            z.object({ deleted: z.literal(true) }),
-            "DELETE",
-          );
+                    void guarded(async () => {
+                      await api(
+                        `/conversations/${h.id}`,
+                        z.object({ deleted: z.literal(true) }),
+                        "DELETE",
+                      );
 
-          if (conversation === h.id) {
-            setConversation("");
-            resetConversationView();
-          }
+                      if (conversation === h.id) {
+                        setConversation("");
+                        resetConversationView();
+                      }
 
-          await reloadHistory();
-        });
-      }}
-    >
-      حذف
-    </button>
-  </li>
-))}
+                      await reloadHistory();
+                    });
+                  }}
+                >
+                  حذف
+                </button>
+              </li>
+            ))}
           </ul>
           {authenticated && history.length > 0 && !historyMatches.length && (
             <p className="history-empty">مفيش محادثات مطابقة.</p>
@@ -806,7 +808,6 @@ export function Workspace() {
                         المصادر ({sources.length})
                       </button>
                     )}
-                    
                   </div>
                   {sourceView && sources.length > 0 && (
                     <div className="source-list">
@@ -992,7 +993,7 @@ export function Workspace() {
                       strokeWidth={2}
                       aria-hidden="true"
                       strokeLinejoin="round"
-                      >
+                    >
                       <path d="m16.5 6.5-7.79 7.79a3 3 0 0 0 4.24 4.24l8.49-8.49a5 5 0 0 0-7.07-7.07l-8.49 8.49a7 7 0 0 0 9.9 9.9l7.78-7.78" />
                     </svg>
                     <input
@@ -1080,20 +1081,20 @@ export function Workspace() {
                     onClick={() => setVoice((v) => !v)}
                   >
                     <svg
-  viewBox="0 0 24 24"
-  width="23"
-  height="23"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth={2}
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  aria-hidden="true"
->
-  <rect x="9" y="2" width="6" height="12" rx="3" />
-  <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
-  <path d="M12 19v3M8 22h8" />
-</svg>
+                      viewBox="0 0 24 24"
+                      width="23"
+                      height="23"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <rect x="9" y="2" width="6" height="12" rx="3" />
+                      <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
+                      <path d="M12 19v3M8 22h8" />
+                    </svg>
                   </button>
                   {busy ? (
                     <button
@@ -1112,19 +1113,19 @@ export function Workspace() {
                       aria-label="إرسال الرسالة"
                     >
                       <svg
-  viewBox="0 0 24 24"
-  width="23"
-  height="23"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth={2.4}
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  aria-hidden="true"
->
-  <path d="M12 19V5" />
-  <path d="m5 12 7-7 7 7" />
-</svg>
+                        viewBox="0 0 24 24"
+                        width="23"
+                        height="23"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2.4}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M12 19V5" />
+                        <path d="m5 12 7-7 7 7" />
+                      </svg>
                     </button>
                   )}
                 </form>
@@ -1144,7 +1145,10 @@ export function Workspace() {
                     ? "المحادثة الذكية مش مفعّلة على الخادم ده."
                     : authenticated
                       ? "سَدِيمًا بيقولك لما مش متأكد. مفيش حجز أو دفع."
-                      : "بإرسال رسالتك بتوافق إنك تستخدم بيانات عامة وغير حساسة بس. مفيش حجز أو دفع."}
+                      : "بإرسال رسالتك بتوافق إنك تستخدم بيانات عامة وغير حساسة بس. مفيش حجز أو دفع."}{" "}
+                  <a href="/privacy" target="_blank" rel="noreferrer">
+                    الخصوصية ومعالجة البيانات
+                  </a>
                 </p>
               </div>
             </section>

@@ -4,6 +4,9 @@ import "./globals.css";
 import "./celestial.css";
 import "./shell.css";
 
+// A fresh CSP nonce must be attached while rendering each HTML response.
+export const dynamic = "force-dynamic";
+
 // Self-hosted at build time by next/font: no runtime request to Google.
 const body = IBM_Plex_Sans_Arabic({
   subsets: ["arabic", "latin"],

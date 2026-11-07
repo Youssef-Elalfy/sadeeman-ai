@@ -70,7 +70,7 @@ export function startupReport(
       ? "Tavily configured (not verified)"
       : "DISABLED — TAVILY_API_KEY missing";
   const lines = [
-    `  Data policy  : ${dataMode(config)} — development workspace; use public, non-sensitive data only`,
+    `  Data policy  : ${dataMode(config)} — use public, non-sensitive data only`,
     `  Persistence  : ${persistence}`,
     `  Guest entry  : ${guest}`,
     `  Chat model   : ${model}`,

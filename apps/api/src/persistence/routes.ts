@@ -9,6 +9,7 @@ import { z } from "zod";
 import type { Config } from "../config.js";
 import { dataMode, guestPolicy } from "../data-policy.js";
 import { SafeError } from "../errors.js";
+import type { ProviderAdmission } from "../provider-admission.js";
 import { Repository } from "./repository.js";
 import type { Identity, Persistence } from "./types.js";
 
@@ -18,6 +19,7 @@ export function registerPersistenceRoutes(
   principal: (header: string | undefined) => Promise<Identity>,
   onPrivacyChange: (ownerId: string) => void,
   config: Config,
+  admission?: ProviderAdmission,
 ) {
   const repo = async (header: string | undefined) => {
     const identity = await principal(header);
@@ -40,10 +42,15 @@ export function registerPersistenceRoutes(
       )
         throw new SafeError("INVALID_REQUEST", 400);
       if (!persistence) throw new SafeError("DISCONNECTED");
-      return reply.code(201).send({
-        ...(await persistence.auth.guest(input.captchaToken)),
-        dataMode: dataMode(config),
-      });
+      const release = admission?.acquire("guest");
+      try {
+        return reply.code(201).send({
+          ...(await persistence.auth.guest(input.captchaToken)),
+          dataMode: dataMode(config),
+        });
+      } finally {
+        release?.();
+      }
     },
   );
   app.post(

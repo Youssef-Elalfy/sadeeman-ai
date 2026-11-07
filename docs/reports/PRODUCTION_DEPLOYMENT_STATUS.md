@@ -1,41 +1,27 @@
-# Public deployment checkpoint — 2026-11-07
+# Production deployment — 2026-11-07
 
-## Resumed checkpoint (supersedes the original sign-in blocker below)
+Private source: https://github.com/Youssef-Elalfy/sadeeman-ai. Current local product only; no unrelated repository used.
 
-**Latest result:** reviewed, secret-scanned source was pushed to the dedicated PRIVATE repository https://github.com/Youssef-Elalfy/sadeeman-ai (initial commit `0c62cb5bd85392fb0ef3a7cc6d57aba9d15c265e`). No old MASAR repository was used. 230 allowlisted files were scanned before the initial push; environment/private/cache/generated files and screenshots were excluded. Public media required by the current UI was included. The CI workflow was not activated.
+## Security release evidence
+- The controlled disposable user 005eeacb-9800-4b00-8174-1e57eb1c57f0 was deleted by the owner. Read-only Cloud checks confirmed zero users, sessions and refresh tokens for that exact ID. Claims/session evidence: PRODUCTION_SESSION_CLAIMS_2026-11-07.json. No schema or Auth settings changed.
+- The production guard now enforces durable, project-pinned Supabase authentication, an exact HTTPS Vercel origin, real Gemini primary/Groq fallback, zero provider retries and disabled synthetic/catalog-demo/OpenRouter modes. Missing prerequisites fail startup.
+- Session ownership, RLS, explicit public-data policy and opt-in durable memory consent retained. Sensitive content and provider keys are not logged. File/audio size and content checks retained.
+- Aggregate single-replica hourly limits: 30 agent turns, 30 voice requests, 10 guests; two concurrent provider operations; Tavily one basic search/turn and ten searches/hour. Counts include failures. Restarts reset counters; horizontal scaling requires shared limits before enablement. Forwarded client IPs remain untrusted.
+- Nonce CSP blocks untrusted scripts; frame protection, HSTS and restricted browser capabilities added. Tokens remain tab-scoped sessionStorage, with XSS risk reduced by strict CSP and escaped content; no claim of HttpOnly cookies. Privacy notice explains processors, persistence, voice and deletion limits.
+- Current advisors: eleven intentional anonymous-user policy warnings and disabled leaked-password protection (Free-plan limitation); no application table lacks FORCE RLS. Private-schema API probe denied with 406/PGRST106. These warnings were not suppressed.
+- Lockfile advisory audit: 299 packages, zero advisories returned by the npm bulk advisory endpoint. Source secret scan passed (235 allowlisted files).
 
-The controlled Cloud claim/expiry checks now pass; evidence is in `PRODUCTION_SESSION_CLAIMS_2026-11-07.json`. Exactly one approved anonymous identity was created. It is signed out with zero remaining sessions/active refresh tokens and zero owned conversations/memory/consent/messages/turns/travel profiles. User `005eeacb-9800-4b00-8174-1e57eb1c57f0` awaits owner deletion in Supabase Authentication > Users. The production guard must remain enabled until cleanup is verified and the remaining release requirements are met. No production site or backend has been deployed.
+## Local verification
+- Full Vitest run: 428/428 across 34 files; additional API concurrency regression added and all 19 release tests pass (429 tests in current inventory). No live providers in automated tests.
+- Contracts/API builds, web/tests strict typechecks and full Biome check passed. Next production build passed with dynamic nonce-protected pages.
+- Local Edge/Playwright: HTML 200, all scripts nonced, zero page/CSP errors, no document overflow at 1440px/390px, privacy link present, no provider-key patterns in HTML. Backend was intentionally not running in this UI-only check. Mobile heading width corrected after screenshot inspection.
 
-Private-schema exposure probe returned HTTP 406 / PGRST106, confirming the private schema was rejected by the Data API. After the deployment-preparation edits, 102 targeted regression/security/attachment tests passed and API compilation, strict typecheck and Next production build passed. Docker execution and public end-to-end acceptance are not yet tested.
+## Hosting checkpoint
+- Railway trial verified: 30 days, 5 dollars remaining credit, no billing upgrade or payment changes. Dedicated project 70b31570-653b-4d18-846c-22265da57655; service 7145d735-1b65-451b-8463-0c1db1ce2775; production environment 635453a5-fb86-419a-8189-1acae6a307d1.
+- Railway domain allocated: https://sadeeman-api-production.up.railway.app. Deployment/health not yet verified. 39 reviewed server variables securely sent through stdin and values compared without printing. Only the rotated Tavily key was used; OpenRouter key absent.
+- Vercel Hobby verified. Project prj_WpK40ySZ0FUdiBPINRNoKZClItLT created; Node 24, apps/web monorepo root, contracts build and HTTPS API_ORIGIN prepared. No backend secrets uploaded to Vercel.
+- Automatic approval review denied clearing Vercel deployment protection; protection remains unchanged. Public access must be tested before requesting an exact setting change.
+- No public frontend/backend success or live E2E claim until actual deployment and checks complete.
 
-Railway authentication now verified. Read-only account checks report a verified registered account with no restriction flags and a 30-day trial with $5 remaining credit. No paid plan or payment method was enabled. The existing Supabase project `ujdzysbowngtkwndgoqf` is ACTIVE_HEALTHY. Current security advisors report the same eleven guest-policy warnings and disabled leaked-password protection warning; there are zero application tables without FORCE RLS, and the session validator is present. Private-schema API exposure and remaining release checks are not yet marked passed.
-
-The owner confirms the old Tavily key has been revoked and a rotated key is configured locally. No key value is printed or committed. Deployment entry-point, Docker and HTTPS proxy preparation is local only. The production startup guard remains intact. Source scanning/publication and the remaining security checks are in progress; public deployment is not complete. The initial checkpoint below is historical evidence, not the current authentication state.
-
-Status: **blocked at Railway sign-in; nothing deployed or pushed**.
-
-Verified in this deployment attempt:
-
-- Current workspace is Sadeeman; no local Git repository exists yet.
-- GitHub authenticated account is accessible. Vercel project search succeeded; no Sadeeman project was returned in the current scope. No repositories/projects were created or changed.
-- Official Railway CLI 5.71.0 installed only in ignored `.private/deploy-cli-cache`, without changing application dependencies. The restricted shell could not resolve its credential home. A single read-only identity check outside the sandbox confirmed that user sign-in is required.
-- `node node_modules/vitest/vitest.mjs run --maxWorkers=1`: **410/410 passed**, 33 files, 58.72 seconds, started 03:43:20 Africa/Cairo.
-- Contracts/API TypeScript builds, frontend and tests/tools strict typechecks passed using the installed TypeScript CLI.
-- `node node_modules/next/dist/bin/next build` from `apps/web`: passed, four static pages.
-
-The production audit is not complete. The existing blanket production/privacy guard remains intact. The API still binds loopback; the Next API proxy still accepts loopback targets only. These must be replaced with verified production configuration and security boundaries after access is established, not bypassed. Existing session-security SQL must not be replayed. No Cloud SQL/Auth settings or provider secrets were changed, and no live AI/search/voice calls were made.
-
-## Required user step
-
-Run in an ordinary PowerShell terminal:
-
-```powershell
-cd C:\Users\youss\Desktop\Sadeeman
-npm exec --yes --cache .private/deploy-cli-cache --package=@railway/cli@5.71.0 -- railway login --browserless
-```
-
-Complete the sign-in URL/pairing flow yourself, then confirm completion in chat. Do not paste tokens, credential files or passwords. Do not approve billing or create paid resources. The official login flow is documented at https://docs.railway.com/cli/login.
-
-Per the owner's instruction to stop at required external sign-in, deployment preparation/publication is paused here. After sign-in: verify account and free/trial eligibility, complete the production/security audit and production entry/proxy/session/abuse boundaries, prepare reviewed secret-free source, then create/select the dedicated repository and deploy within authorized no-paid limits. No public URL is claimed until backend, frontend and bounded public end-to-end checks actually pass.
-
-Frontend URL: not created. Backend URL: not created. GitHub repository URL: not created.
+## Next
+Push reviewed source without history rewrite, deploy source-only Railway archive, deploy Vercel from current private repository, verify actual public endpoints and bounded acceptance. Stop on trial/network/billing blockers.
