@@ -1,0 +1,234 @@
+{
+  "status": "FAILED_OR_BLOCKED",
+  "stage": "cleanup_second_auth_session",
+  "checkedAt": "2026-11-05T20:50:15.882Z",
+  "durationMs": 13640,
+  "projectRef": "ujdzysbowngtkwndgoqf",
+  "limits": {
+    "maxRequests": 48,
+    "maxDurationMs": 120000,
+    "retries": 0,
+    "maxGuests": 2
+  },
+  "networkRequests": 33,
+  "createdGuests": 2,
+  "checks": {
+    "twoDistinctAuthenticatedGuests": true,
+    "ownedConversationsAndCrossUserRls": true,
+    "crossUserRevocationDeniedAndVictimStillActive": true,
+    "refreshAndRecreatedClientContinuity": true,
+    "testConversationCleanup": true,
+    "revokedSessionRejected": true,
+    "otherUserUnaffectedByLogout": true,
+    "signedUnexpiredJwtWithRemovedAuthSessionRejected": true
+  },
+  "pending": [
+    "Run stopped at the recorded stage; inspect scoped test cleanup before any further live attempt."
+  ],
+  "sequence": [
+    {
+      "stage": "create_and_authenticate_two_guests",
+      "route": "/auth/v1/signup",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "create_and_authenticate_two_guests",
+      "route": "/auth/v1/signup",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "create_and_authenticate_two_guests",
+      "route": "/auth/v1/user",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "create_and_authenticate_two_guests",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "create_and_authenticate_two_guests",
+      "route": "/auth/v1/user",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "create_and_authenticate_two_guests",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "create_owned_synthetic_conversations",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "create_owned_synthetic_conversations",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "owner_reads_and_two_user_isolation",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "owner_reads_and_two_user_isolation",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "owner_reads_and_two_user_isolation",
+      "route": "/rest/v1/sadeeman_conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "owner_reads_and_two_user_isolation",
+      "route": "/rest/v1/sadeeman_conversations",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "deny_cross_user_session_revocation",
+      "route": "/rest/v1/sadeeman_session_revocations",
+      "method": "POST",
+      "status": 403
+    },
+    {
+      "stage": "deny_cross_user_session_revocation",
+      "route": "/auth/v1/user",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "deny_cross_user_session_revocation",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "refresh_and_reopen_legitimate_session",
+      "route": "/auth/v1/token",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "refresh_and_reopen_legitimate_session",
+      "route": "/auth/v1/user",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "refresh_and_reopen_legitimate_session",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "refresh_and_reopen_legitimate_session",
+      "route": "/auth/v1/user",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "refresh_and_reopen_legitimate_session",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "refresh_and_reopen_legitimate_session",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "refresh_and_reopen_legitimate_session",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "remove_only_this_runs_two_test_conversations",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "remove_only_this_runs_two_test_conversations",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "application_revocation_rejected",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "application_revocation_rejected",
+      "route": "/rest/v1/rpc/sadeeman_session_active",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "application_revocation_rejected",
+      "route": "/auth/v1/user",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "application_revocation_rejected",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 400
+    },
+    {
+      "stage": "other_user_remains_active_after_victim_logout",
+      "route": "/auth/v1/user",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "stage": "other_user_remains_active_after_victim_logout",
+      "route": "/rest/v1/rpc/sadeeman_operation",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "auth_signout_removes_session_and_rejects_unexpired_jwt",
+      "route": "/auth/v1/logout",
+      "method": "POST",
+      "status": 204
+    },
+    {
+      "stage": "auth_signout_removes_session_and_rejects_unexpired_jwt",
+      "route": "/rest/v1/rpc/sadeeman_session_active",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "stage": "auth_signout_removes_session_and_rejects_unexpired_jwt",
+      "route": "/auth/v1/user",
+      "method": "GET",
+      "status": 403
+    }
+  ],
+  "migrationExecutions": 0,
+  "historyChanges": 0,
+  "authConfigurationChanges": 0,
+  "realModelOrSearchCalls": 0,
+  "credentialsDisplayed": false,
+  "note": "Two test-only guest Auth accounts remain; no privileged user deletion was attempted."
+}

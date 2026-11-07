@@ -1,0 +1,21 @@
+{
+  "status": "FAILED",
+  "stage": "M3-LIVE-001",
+  "lastHttp": 200,
+  "code": "PROVIDER_QUOTA",
+  "searchRequests": 1,
+  "observed": [
+    {
+      "tool": "research_destination",
+      "status": "ok"
+    },
+    {
+      "tool": "build_itinerary",
+      "status": "ok"
+    }
+  ],
+  "evaluated": 0,
+  "credentialsDisplayed": false,
+  "feedbackDelivered": [],
+  "evaluations": []
+}

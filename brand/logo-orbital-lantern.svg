@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+<title id="title">SADEEMAN AI Orbital Lantern symbol</title>
+<desc id="desc">An abstract warm orbital lantern with a four-pointed discovery star.</desc>
+<defs>
+<linearGradient id="sadeemanGlow" x1="0%" y1="0%" x2="100%" y2="100%"><stop stop-color="#F7B267"/><stop offset="0.55" stop-color="#E66F50"/><stop offset="1" stop-color="#B795E4"/></linearGradient>
+</defs>
+<circle cx="80" cy="80" r="73" fill="#26192F"/>
+<g fill="none" stroke="url(#sadeemanGlow)" stroke-linecap="round">
+ <path d="M 25 75 A 56 56 0 0 1 115 36" stroke-width="7"/>
+ <path d="M 137 70 A 57 57 0 0 1 65 135" stroke-width="5" opacity=".83"/>
+ <path d="M 48 125 A 55 55 0 0 1 25 92" stroke-width="4" opacity=".70"/>
+ <ellipse cx="81" cy="80" rx="44" ry="24" transform="rotate(-33 81 80)" stroke-width="3" opacity=".67"/>
+</g>
+<path d="M 80 52 Q 84 77 108 81 Q 84 85 80 108 Q 76 85 52 81 Q 76 77 80 52 Z" fill="#F7B267"/>
+<circle cx="124" cy="43" r="5" fill="#E66F50"/>
+<circle cx="36" cy="107" r="3" fill="#B795E4"/>
+</svg>

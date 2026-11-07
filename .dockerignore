@@ -1,0 +1,15 @@
+.git
+**/node_modules
+**/dist
+**/.next
+.private
+.pnpm-store
+.env
+.env.*
+**/*.log
+**/*.tsbuildinfo
+.claude
+.playwright-mcp
+test-results
+CLAUDE_HANDOFF
+docs

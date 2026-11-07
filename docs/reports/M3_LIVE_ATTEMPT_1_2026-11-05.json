@@ -1,0 +1,18 @@
+{
+  "status": "FAILED",
+  "evidenceBasis": "Observed evaluation stdout; no generated answer was retained by the first harness version",
+  "stage": "M3-LIVE-002",
+  "lastHttp": 200,
+  "code": "EVALUATION_ASSERTION",
+  "searchRequests": 1,
+  "passedCases": 1,
+  "totalCases": 2,
+  "observed": [
+    { "tool": "research_destination", "status": "ok" },
+    { "tool": "build_itinerary", "status": "ok" },
+    { "tool": "compare_travel_options", "status": "rejected", "code": "INVALID_TOOL_ARGUMENTS" }
+  ],
+  "credentialsDisplayed": false,
+  "supabaseAccess": false,
+  "note": "Strict argument rejection prevented an invalid comparison. No raw tool arguments were logged, so the exact rejected field in this live attempt is unknown. A later local fix provides value-free validation paths; a new live check requires authorization after the stop."
+}

@@ -1,0 +1,2 @@
+# Brand files
+`brand.json` is the source of truth for all identity tokens and product strings. `tokens.css` is the starting theme, not a full product CSS build. `logo-orbital-lantern.svg` is an editable original vector concept. `preview.html` is a fully STATIC, labeled visual concept; no live server, model, voice or travel booking. Open locally in a browser to view intended warmth, layout and iconography. Codex must evolve this into a REAL Three.js-based app connected to the backend, not simply ship the preview. Arabic brand spelling: **سَدِيمًا**.

@@ -1,0 +1,57 @@
+{
+  "projectRef": "ujdzysbowngtkwndgoqf",
+  "sessionBoundary": {
+    "version": "20261105154454",
+    "file": "20261105154454_session_boundary_hardening.sql",
+    "sha256": "770237AB233569FF25899BB4611F0A62D6C98EBB88B08E95B9D0BE6593F47AA0",
+    "cloudDeployment": "manually_applied_user_reported",
+    "independentDefinitionComparison": "user_confirmed_all_7_deployed_security_contract_checks_passed",
+    "twoUserCloudRegression": "core_passed_user_confirmed_controlled_claim_expiry_fixture_pending",
+    "cloudRegressionEvidence": "docs/reports/SESSION_CLOUD_TWO_USER_2026-11-05.json",
+    "fullSessionAcceptance": "pending",
+    "localRegression": "343_passed_all_previous_309_and_240_preserved",
+    "finalStabilizationReport": "docs/reports/M3_FINAL_STABILIZATION_AND_ACCEPTANCE.md",
+    "cloudMigrationHistory": "officially_recorded_user_confirmed_2026_11_06",
+    "historyRepairApproval": {
+      "status": "history_recording_completed_user_confirmed_not_executed_in_this_chat",
+      "approvedOn": "2026-11-06",
+      "projectRef": "ujdzysbowngtkwndgoqf",
+      "version": "20261105154454",
+      "action": "official_cli_migration_repair_status_applied",
+      "requiresWorkingCloudAccessAndVerifiedMissingEntry": true,
+      "skipIfCorrectEntryExists": true,
+      "stopOnConflict": true,
+      "preserveOtherEntries": true,
+      "executeMigrationSql": false
+    },
+    "mustNotReplayOnCloud": true,
+    "temporaryGuestBCleanup": "identity_and_sessions_deleted_user_confirmed_2026_11_06"
+  },
+  "crmWorkspace": {
+    "version": "20261106094526",
+    "file": "../retired/20261106094526_crm_approval_workspace.sql",
+    "sha256": "A111DFB6146132BABDF92381FA0C80C9CA38EEAA067C1C6872E311BBF23E8338",
+    "localDeployment": "no_longer_applied_to_new_databases_existing_local_tables_untouched",
+    "cloudDeployment": "never_applied_must_not_apply",
+    "qaReport": "CLAUDE_HANDOFF/QA_RESULTS.md",
+    "status": "retired_by_owner_scope_correction_2026_11_06"
+  },
+  "existingVersionMappings": [
+    {
+      "local": "20261104232715",
+      "cloud": "20261105005039",
+      "name": "identity_memory_foundation"
+    },
+    {
+      "local": "20261105001704",
+      "cloud": "20261105005048",
+      "name": "tool_execution_records"
+    },
+    {
+      "local": "20261105144113",
+      "cloud": "20261105152213",
+      "name": "company_catalog_travel_context"
+    }
+  ],
+  "note": "Local status record only; it is not the remote ledger or independent Cloud acceptance evidence."
+}

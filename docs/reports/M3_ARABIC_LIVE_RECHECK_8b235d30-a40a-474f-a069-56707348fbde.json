@@ -1,0 +1,240 @@
+{
+  "status": "FAILED",
+  "stage": "M3-FINAL-001",
+  "lastHttp": 200,
+  "code": "EVALUATION_FAILURE",
+  "searchRequests": 0,
+  "observed": [
+    {
+      "tool": "propose_travel_constraints",
+      "status": "rejected",
+      "code": "CONSTRAINT_CONFLICT",
+      "constraintProposal": {
+        "expectedVersion": 1,
+        "patch": {
+          "destination": "تركيا",
+          "days": 5,
+          "travellers": 2,
+          "adults": 2,
+          "currency": "EGP",
+          "budgetMinor": 3000000,
+          "budgetBasis": "party_total"
+        },
+        "evidence": [
+          {
+            "field": "destination",
+            "quote": "تركيا"
+          },
+          {
+            "field": "days",
+            "quote": "5 أيام"
+          },
+          {
+            "field": "travellers",
+            "quote": "شخصين"
+          },
+          {
+            "field": "adults",
+            "quote": "شخصين"
+          },
+          {
+            "field": "budgetMinor",
+            "quote": "30 ألف"
+          }
+        ]
+      },
+      "constraintFeedback": {
+        "reason": "CONSTRAINT_VALUE_NOT_EXPLICIT",
+        "fields": [
+          "adults"
+        ]
+      }
+    },
+    {
+      "tool": "propose_travel_constraints",
+      "status": "rejected",
+      "code": "CONSTRAINT_CONFLICT",
+      "constraintProposal": {
+        "expectedVersion": 1,
+        "patch": {
+          "destination": "تركيا",
+          "days": 5,
+          "travellers": 2,
+          "currency": "EGP",
+          "budgetMinor": 3000000,
+          "budgetBasis": "party_total"
+        },
+        "evidence": [
+          {
+            "field": "destination",
+            "quote": "تركيا"
+          },
+          {
+            "field": "days",
+            "quote": "5 أيام"
+          },
+          {
+            "field": "travellers",
+            "quote": "شخصين"
+          },
+          {
+            "field": "budgetMinor",
+            "quote": "30 ألف"
+          }
+        ]
+      },
+      "constraintFeedback": {
+        "reason": "CURRENT_USER_EVIDENCE_REQUIRED",
+        "fields": [
+          "budgetBasis"
+        ]
+      }
+    }
+  ],
+  "evaluated": 0,
+  "credentialsDisplayed": false,
+  "fixture": {
+    "synthetic": true,
+    "initialConfirmedCurrency": "EGP",
+    "supabaseAccess": false
+  },
+  "turnSnapshots": [
+    {
+      "scenario": "M3-FINAL-001",
+      "completed": false,
+      "runFailure": "INVALID_MODEL_RESPONSE",
+      "actualAnswer": null,
+      "travelContext": {
+        "before": {
+          "version": 1,
+          "constraints": {
+            "currency": "EGP"
+          },
+          "options": []
+        },
+        "proposed": {
+          "version": 1,
+          "constraints": {
+            "currency": "EGP"
+          },
+          "options": []
+        },
+        "committed": false
+      },
+      "sourceEvidence": [],
+      "actualTools": [
+        {
+          "tool": "propose_travel_constraints",
+          "status": "rejected",
+          "code": "CONSTRAINT_CONFLICT",
+          "constraintProposal": {
+            "expectedVersion": 1,
+            "patch": {
+              "destination": "تركيا",
+              "days": 5,
+              "travellers": 2,
+              "adults": 2,
+              "currency": "EGP",
+              "budgetMinor": 3000000,
+              "budgetBasis": "party_total"
+            },
+            "evidence": [
+              {
+                "field": "destination",
+                "quote": "تركيا"
+              },
+              {
+                "field": "days",
+                "quote": "5 أيام"
+              },
+              {
+                "field": "travellers",
+                "quote": "شخصين"
+              },
+              {
+                "field": "adults",
+                "quote": "شخصين"
+              },
+              {
+                "field": "budgetMinor",
+                "quote": "30 ألف"
+              }
+            ]
+          },
+          "constraintFeedback": {
+            "reason": "CONSTRAINT_VALUE_NOT_EXPLICIT",
+            "fields": [
+              "adults"
+            ]
+          }
+        },
+        {
+          "tool": "propose_travel_constraints",
+          "status": "rejected",
+          "code": "CONSTRAINT_CONFLICT",
+          "constraintProposal": {
+            "expectedVersion": 1,
+            "patch": {
+              "destination": "تركيا",
+              "days": 5,
+              "travellers": 2,
+              "currency": "EGP",
+              "budgetMinor": 3000000,
+              "budgetBasis": "party_total"
+            },
+            "evidence": [
+              {
+                "field": "destination",
+                "quote": "تركيا"
+              },
+              {
+                "field": "days",
+                "quote": "5 أيام"
+              },
+              {
+                "field": "travellers",
+                "quote": "شخصين"
+              },
+              {
+                "field": "budgetMinor",
+                "quote": "30 ألف"
+              }
+            ]
+          },
+          "constraintFeedback": {
+            "reason": "CURRENT_USER_EVIDENCE_REQUIRED",
+            "fields": [
+              "budgetBasis"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "checkedAt": "2026-11-05T23:09:16.362Z",
+  "providerFailures": [],
+  "providerBudget": {
+    "requests": 2,
+    "maximum": 10,
+    "attempts": [
+      {
+        "provider": "gemini",
+        "outcome": "ok"
+      },
+      {
+        "provider": "gemini",
+        "outcome": "ok"
+      }
+    ]
+  },
+  "feedbackDelivered": [
+    {
+      "tool": "propose_travel_constraints",
+      "code": "CONSTRAINT_CONFLICT",
+      "paths": [
+        "adults"
+      ]
+    }
+  ],
+  "evaluations": []
+}

@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-11-05T20:45:46.281Z",
+  "projectRef": "ujdzysbowngtkwndgoqf",
+  "preflightExitCode": 0,
+  "attempts": 2,
+  "observations": [
+    {
+      "step": 1,
+      "status": 200
+    },
+    {
+      "step": 2,
+      "status": 401
+    }
+  ],
+  "retries": 0,
+  "createdGuestAccounts": 0,
+  "databaseWrites": 0,
+  "migrationExecutions": 0,
+  "migrationHistoryChanges": 0,
+  "realModelOrSearchCalls": 0,
+  "credentialsDisplayed": false,
+  "systemCertificateValidationEnabled": true
+}

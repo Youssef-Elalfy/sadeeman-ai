@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "eventId",
+    "runId",
+    "type",
+    "occurredAt"
+  ],
+  "properties": {
+    "eventId": {
+      "type": "string"
+    },
+    "runId": {
+      "type": "string"
+    },
+    "conversationId": {
+      "type": "string"
+    },
+    "occurredAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "run_started",
+        "model_processing",
+        "tool_started",
+        "tool_completed",
+        "tool_failed",
+        "source_found",
+        "consent_requested",
+        "response_delta",
+        "response_completed",
+        "run_failed",
+        "run_canceled",
+        "voice_recording",
+        "voice_transcript_ready",
+        "voice_playback_started",
+        "voice_playback_stopped"
+      ]
+    },
+    "toolName": {
+      "type": "string"
+    },
+    "safeStatus": {
+      "type": "string"
+    },
+    "textDelta": {
+      "type": "string"
+    },
+    "sourceUrl": {
+      "type": "string",
+      "format": "uri"
+    },
+    "correlationId": {
+      "type": "string"
+    }
+  }
+}

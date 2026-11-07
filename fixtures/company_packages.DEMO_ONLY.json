@@ -1,0 +1,107 @@
+{
+  "IMPORTANT": "ALL ENTITIES, PRICE AMOUNTS AND INCLUSIONS BELOW ARE FICTIONAL TEST FIXTURES — NOT REAL OFFERS",
+  "validFor": "local development/testing only",
+  "packages": [
+    {
+      "id": "DEMO-SAD-001",
+      "nameAr": "واحة سيوة وتجربة النجوم",
+      "destination": "Siwa Oasis, Egypt",
+      "travelStyle": [
+        "nature",
+        "desert",
+        "relaxation"
+      ],
+      "days": 4,
+      "nights": 3,
+      "currency": "EGP",
+      "pricePerAdult": 6900,
+      "priceBasis": "per_person",
+      "priceIsSynthetic": true,
+      "maxGroupSize": null,
+      "departures": [],
+      "inclusions": [
+        "Fictional accommodation",
+        "Fictional guided desert walk"
+      ],
+      "exclusions": [
+        "Transport from departure city unless specified"
+      ],
+      "bookingStatus": "DEMO_ONLY_NOT_BOOKABLE"
+    },
+    {
+      "id": "DEMO-SAD-002",
+      "nameAr": "دهب بين البحر والجبال",
+      "destination": "Dahab, Egypt",
+      "travelStyle": [
+        "sea",
+        "adventure"
+      ],
+      "days": 5,
+      "nights": 4,
+      "currency": "EGP",
+      "pricePerAdult": 8900,
+      "priceBasis": "per_person",
+      "priceIsSynthetic": true,
+      "maxGroupSize": null,
+      "departures": [],
+      "inclusions": [
+        "Fictional hotel stay",
+        "Fictional local activity"
+      ],
+      "exclusions": [
+        "International flights"
+      ],
+      "bookingStatus": "DEMO_ONLY_NOT_BOOKABLE"
+    },
+    {
+      "id": "DEMO-SAD-003",
+      "nameAr": "أسوان من زاوية مختلفة",
+      "destination": "Aswan, Egypt",
+      "travelStyle": [
+        "culture",
+        "romance"
+      ],
+      "days": 3,
+      "nights": 2,
+      "currency": "EGP",
+      "pricePerAdult": 5800,
+      "priceBasis": "per_person",
+      "priceIsSynthetic": true,
+      "maxGroupSize": null,
+      "departures": [],
+      "inclusions": [
+        "Fictional hotel stay",
+        "Fictional guided tour"
+      ],
+      "exclusions": [
+        "Transport unless separately arranged"
+      ],
+      "bookingStatus": "DEMO_ONLY_NOT_BOOKABLE"
+    },
+    {
+      "id": "DEMO-SAD-004",
+      "nameAr": "مرسى علم استجمام ومغامرة",
+      "destination": "Marsa Alam, Egypt",
+      "travelStyle": [
+        "sea",
+        "relaxation"
+      ],
+      "days": 6,
+      "nights": 5,
+      "currency": "EGP",
+      "pricePerAdult": 12200,
+      "priceBasis": "per_person",
+      "priceIsSynthetic": true,
+      "maxGroupSize": null,
+      "departures": [],
+      "inclusions": [
+        "Fictional hotel stay",
+        "Fictional sea excursion"
+      ],
+      "exclusions": [
+        "Flight tickets"
+      ],
+      "bookingStatus": "DEMO_ONLY_NOT_BOOKABLE"
+    }
+  ]
+}

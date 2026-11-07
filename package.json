@@ -1,0 +1,49 @@
+{
+  "name": "sadeeman-ai",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24.14.0 <25"
+  },
+  "scripts": {
+    "dev": "node tools/dev.ts",
+    "build": "pnpm -r build",
+    "start": "pnpm --filter @sadeeman/api start",
+    "typecheck": "pnpm -r typecheck && tsc -p tsconfig.tests.json --noEmit",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "test": "vitest run",
+    "smoke": "node tools/smoke.ts",
+    "smoke:persistence": "node tools/smoke-persistence.ts",
+    "chat": "node tools/chat.ts",
+    "db:migrate": "node --env-file-if-exists=.env tools/db-migrate.ts",
+    "providers:check": "node --env-file-if-exists=.env tools/providers-check.ts",
+    "gemini:models": "node --env-file-if-exists=.env tools/gemini-models.ts",
+    "verify:gemini": "node --env-file-if-exists=.env tools/verify-gemini.ts",
+    "cloud:check": "node --env-file-if-exists=.env tools/cloud-preflight.ts",
+    "services:check": "node --env-file-if-exists=.env tools/service-check.ts",
+    "verify:tavily": "node --env-file-if-exists=.env tools/verify-tavily.ts",
+    "eval:travel": "node --env-file-if-exists=.env tools/eval-travel.ts",
+    "catalog:import": "node tools/catalog-import.ts",
+    "catalog:validate": "node tools/catalog-validate.ts",
+    "verify:cloud": "node --env-file-if-exists=.env tools/cloud-verify.ts",
+    "eval:inventory": "node tests/evals/inventory.ts",
+    "dev:web": "pnpm --filter @sadeeman/web dev",
+    "dev:api": "pnpm --filter @sadeeman/contracts build && pnpm --filter @sadeeman/api build && pnpm --filter @sadeeman/api start",
+    "test:e2e": "node tools/run-e2e.ts",
+    "dev:rebuild": "node tools/dev.ts --rebuild"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.5",
+    "@playwright/test": "1.65.0",
+    "@sadeeman/contracts": "workspace:*",
+    "@types/node": "24.19.2",
+    "supabase": "3.0.0",
+    "typescript": "7.0.2",
+    "vitest": "5.1.0",
+    "zod": "4.6.7"
+  },
+  "license": "UNLICENSED"
+}

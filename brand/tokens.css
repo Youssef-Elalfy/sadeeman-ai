@@ -1,0 +1,28 @@
+/* SADEEMAN AI | authentic new brand theme. Concept tokens; implementation should refine contrast. */
+:root, [data-theme="light"] {
+  --font-ar: 'Alexandria', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-ar-display: 'Reem Kufi', 'Alexandria', system-ui, sans-serif;
+  --font-en: 'DM Sans', system-ui, sans-serif;
+  --font-en-display: 'Sora', system-ui, sans-serif;
+  --night-plum: #26192f; --orchid-charcoal: #35233f;
+  --sunset-coral: #e66f50; --deep-coral: #aa402a;
+  --amethyst: #b795e4; --purple-accent: #7c4d9e;
+  --amber: #f7b267; --ivory: #fff6ec; --chalk-rose: #fff0e5;
+  --fig-ink: #291a31; --dusty-mauve: #bfafc5;
+  --success: #39744d; --error: #d45449;
+  --canvas: #fff6ec; --surface: #fffaf5; --surface-raised: #fff0e5;
+  --foreground: #291a31; --foreground-muted: #684f6c;
+  --action: #aa402a; --action-text: #fffaf5;
+  --focus-ring: #7c4d9e;
+  --border: #e7d8df; --shadow: 0 18px 56px rgba(67,37,56,.11);
+  --radius-sm: 12px; --radius-card: 20px; --radius-panel: 26px;
+  --ease-calm: cubic-bezier(.18,.78,.26,1);
+}
+[data-theme="dark"] {
+  --canvas: #26192f; --surface: #2d1e37; --surface-raised: #35233f;
+  --foreground: #fff6ec; --foreground-muted: #d9c6dc;
+  --action: #e66f50; --action-text: #26192f;
+  --focus-ring: #b795e4;
+  --border: rgba(255,230,240,.11); --shadow: 0 18px 62px rgba(11,4,16,.34);
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }

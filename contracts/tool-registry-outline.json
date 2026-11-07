@@ -1,0 +1,152 @@
+[
+  {
+    "name": "search_company_packages",
+    "description": "Search only company DB catalog",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "get_company_package",
+    "description": "Get a package owned by this agency",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "check_company_departures",
+    "description": "Read configured departures only, never invent",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "research_destination",
+    "description": "Search cited destination information",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "search_external_travel_listings",
+    "description": "Retrieve third-party pages as unverified leads",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "check_official_travel_advisory",
+    "description": "Read official source for current entry/advisory facts",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "get_weather_forecast",
+    "description": "Fetch time-stamped forecast if provider connected",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "build_itinerary",
+    "description": "Create nonbookable itinerary estimate",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "estimate_trip_budget",
+    "description": "Calculate money and explain assumptions",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "search_opt_in_memories",
+    "description": "Query only current user consented memories",
+    "sideEffect": false,
+    "authorization": "user",
+    "requiresZodSchema": true,
+    "requiresIdempotency": false,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 6000
+  },
+  {
+    "name": "save_opt_in_preference",
+    "description": "Persist explicitly consented preference",
+    "sideEffect": true,
+    "authorization": "consent:memory",
+    "requiresZodSchema": true,
+    "requiresIdempotency": true,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 10000
+  },
+  {
+    "name": "delete_opt_in_preference",
+    "description": "Delete a memory owned by user",
+    "sideEffect": true,
+    "authorization": "consent:memory",
+    "requiresZodSchema": true,
+    "requiresIdempotency": true,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 10000
+  },
+  {
+    "name": "create_lead",
+    "description": "Persist explicitly reviewed consented lead",
+    "sideEffect": true,
+    "authorization": "consent:lead",
+    "requiresZodSchema": true,
+    "requiresIdempotency": true,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 10000
+  },
+  {
+    "name": "create_quote_request",
+    "description": "Persist approved quotation request only",
+    "sideEffect": true,
+    "authorization": "consent:quote",
+    "requiresZodSchema": true,
+    "requiresIdempotency": true,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 10000
+  },
+  {
+    "name": "request_human_handoff",
+    "description": "Create an authorized staff handoff request",
+    "sideEffect": true,
+    "authorization": "consent:handoff",
+    "requiresZodSchema": true,
+    "requiresIdempotency": true,
+    "status": "SPEC_ONLY_NOT_IMPLEMENTED",
+    "timeoutMsSuggested": 10000
+  }
+]

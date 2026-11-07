@@ -1,0 +1,28 @@
+packages:
+  - apps/*
+  - packages/*
+allowBuilds:
+  '@google/genai': false
+  esbuild: true
+  protobufjs: false
+minimumReleaseAgeExclude:
+  - '@biomejs/biome@2.6.5'
+  - '@biomejs/cli-android-arm64@2.6.5'
+  - '@biomejs/cli-android-x64@2.6.5'
+  - '@biomejs/cli-darwin-arm64@2.6.5'
+  - '@biomejs/cli-darwin-x64@2.6.5'
+  - '@biomejs/cli-linux-arm64-musl@2.6.5'
+  - '@biomejs/cli-linux-arm64@2.6.5'
+  - '@biomejs/cli-linux-x64-musl@2.6.5'
+  - '@biomejs/cli-linux-x64@2.6.5'
+  - '@biomejs/cli-win32-arm64@2.6.5'
+  - '@biomejs/cli-win32-x64@2.6.5'
+  - '@supabase/auth-js@2.119.0'
+  - '@supabase/functions-js@2.119.0'
+  - '@supabase/postgrest-js@2.119.0'
+  - '@supabase/realtime-js@2.119.0'
+  - '@supabase/storage-js@2.119.0'
+  - '@supabase/supabase-js@2.119.0'
+  - '@playwright/test@1.65.0'
+  - playwright-core@1.65.0
+  - playwright@1.65.0

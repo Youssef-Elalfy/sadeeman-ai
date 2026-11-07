@@ -1,0 +1,66 @@
+openapi: 3.1.0
+info:
+  title: SADEEMAN AI API — TARGET OUTLINE ONLY
+  version: 0.0.0-spec
+  description: Design-only outline; Codex must implement, authenticate, validate and test endpoints.
+servers:
+  - url: http://localhost:4000
+paths:
+  /api/v1/health:
+    get:
+      summary: Health without secret values
+      responses:
+        '200': {description: Server is reachable}
+  /api/v1/agent/messages:
+    post:
+      summary: Create a safe agent turn within an authorized conversation
+      security: [{bearerAuth: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [conversationId, content]
+              properties:
+                conversationId: {type: string}
+                content: {type: string, minLength: 1, maxLength: 16000}
+                locale: {type: string, enum: [ar-EG, ar, en]}
+      responses:
+        '202': {description: Accepted, returns runId and user-safe status}
+        '401': {description: Auth required}
+        '429': {description: Rate limited}
+  /api/v1/agent/events/{runId}:
+    get:
+      summary: User-scoped stream of real agent events (SSE)
+      security: [{bearerAuth: []}]
+      parameters:
+        - in: path
+          name: runId
+          required: true
+          schema: {type: string}
+      responses:
+        '200': {description: Real text/event-stream, not fabricated}
+  /api/v1/voice/transcribe:
+    post:
+      summary: Transcribe actual validated user audio via configured STT adapter
+      security: [{bearerAuth: []}]
+      responses:
+        '200': {description: Transcript with confidence and metadata if supported}
+        '503': {description: STT not connected}
+  /api/v1/consents:
+    post:
+      summary: Record scoped user consent in persistent storage
+      security: [{bearerAuth: []}]
+      responses:
+        '201': {description: Durable consent record}
+  /api/v1/leads:
+    post:
+      summary: Create approved lead; enforce idempotency and consent
+      security: [{bearerAuth: []}]
+      responses:
+        '201': {description: Lead created}
+        '403': {description: Consent, user permission, or scope missing}
+components:
+  securitySchemes:
+    bearerAuth: {type: http, scheme: bearer}

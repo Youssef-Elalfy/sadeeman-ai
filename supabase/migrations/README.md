@@ -1,0 +1,11 @@
+# PostgreSQL schema source of truth
+
+`20261104232715_identity_memory_foundation.sql` was created with the pinned Supabase CLI 3.0.0 `migration new` command and contains the actual M2 schema. It uses Supabase's `auth.users`, `auth.uid()` and authenticated role. Customer tables enforce a personal tenant per authenticated subject, RLS + FORCE RLS, owner/provenance foreign keys, active versioned consent, expiry visibility, idempotency and metadata-only audits.
+
+`sadeeman_operation` is SECURITY INVOKER. The original two narrow SECURITY DEFINER helpers live in a private schema: an owner-checked metadata audit trigger (not directly executable), and an owner-checked privacy deletion helper that can remove expired/revoked memory hidden by SELECT RLS. Their search paths are empty. Hosted Data API exposure of that schema remains unverified. No generic elevated SQL executor or service-role client exists.
+
+`pnpm db:migrate --local` only targets the embedded PostgreSQL development database inside `.private/`; its checksummed ledger rejects edited applied files. The local adapter separately bootstraps roles and a minimal local identity namespace; that bootstrap is not part of the Supabase migration and is not a Supabase Auth emulator.
+
+The approved `20261105154454_session_boundary_hardening.sql` is now canonical here, unchanged (SHA256 `770237AB233569FF25899BB4611F0A62D6C98EBB88B08E95B9D0BE6593F47AA0`). The user reports manual Cloud execution; complete definition/two-user verification and ledger status remain pending. **Do not replay it on Cloud.** Its original proposal comment is preserved to keep the approved hash. `deployment-status.json` records evidence limits and historical version mappings. The third private definer is a zero-argument caller-bound boolean session validator; its Auth metadata read does not grant clients Auth-table access.
+
+Use `../verification/session_boundary_read_only.sql` for metadata inspection only. See `docs/SESSION_SECURITY_VERIFICATION_AND_HISTORY.md` for the unexecuted official CLI repair workflow. Do not repair history until deployed definitions are verified and the exact history-only change is separately authorized. The unrelated performance proposal is excluded from the root list. Add upgrades as new migrations; never edit applied SQL bytes.

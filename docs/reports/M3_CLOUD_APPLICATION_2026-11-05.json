@@ -1,0 +1,807 @@
+{
+  "status": "M3_CLOUD_MIGRATION_AND_DATABASE_VERIFICATION_PASSED",
+  "checkedAt": "2026-11-05T15:32:22.113Z",
+  "projectRef": "ujdzysbowngtkwndgoqf",
+  "migrationName": "company_catalog_travel_context",
+  "remoteLedgerVersion": "20261105152213",
+  "localFile": "supabase/migrations/20261105144113_company_catalog_travel_context.sql",
+  "sha256": "4752202DF60641FBA0C2786A13D024F4C0BAB3E35E9E42F7057EF094976F62D4",
+  "application": {
+    "success": true
+  },
+  "preservationChecks": {
+    "allElevenTablesForceRls": true,
+    "originalDataUnchanged": true,
+    "originalPoliciesUnchanged": true,
+    "originalFunctionsUnchanged": true,
+    "originalGrantsUnchanged": true,
+    "originalConversationKeysUnchanged": true,
+    "newFunctionsInvokerAndNoAnon": true,
+    "ledger": {
+      "migrations": [
+        {
+          "version": "20261105005039",
+          "name": "identity_memory_foundation"
+        },
+        {
+          "version": "20261105005048",
+          "name": "tool_execution_records"
+        },
+        {
+          "version": "20261105152213",
+          "name": "company_catalog_travel_context"
+        }
+      ]
+    }
+  },
+  "schema": {
+    "columns": [
+      {
+        "type": "uuid",
+        "table": "sadeeman_company_packages",
+        "column": "id",
+        "nullable": "NO",
+        "generated": "NEVER"
+      },
+      {
+        "type": "jsonb",
+        "table": "sadeeman_company_packages",
+        "column": "document",
+        "nullable": "NO",
+        "generated": "NEVER"
+      },
+      {
+        "type": "text",
+        "table": "sadeeman_company_packages",
+        "column": "code",
+        "nullable": "NO",
+        "generated": "ALWAYS"
+      },
+      {
+        "type": "text",
+        "table": "sadeeman_company_packages",
+        "column": "title",
+        "nullable": "NO",
+        "generated": "ALWAYS"
+      },
+      {
+        "type": "text",
+        "table": "sadeeman_company_packages",
+        "column": "destination",
+        "nullable": "NO",
+        "generated": "ALWAYS"
+      },
+      {
+        "type": "integer",
+        "table": "sadeeman_company_packages",
+        "column": "days",
+        "nullable": "NO",
+        "generated": "ALWAYS"
+      },
+      {
+        "type": "boolean",
+        "table": "sadeeman_company_packages",
+        "column": "is_demo",
+        "nullable": "NO",
+        "generated": "ALWAYS"
+      },
+      {
+        "type": "boolean",
+        "table": "sadeeman_company_packages",
+        "column": "published",
+        "nullable": "NO",
+        "generated": "ALWAYS"
+      },
+      {
+        "type": "timestamp with time zone",
+        "table": "sadeeman_company_packages",
+        "column": "updated_at",
+        "nullable": "NO",
+        "generated": "NEVER"
+      },
+      {
+        "type": "uuid",
+        "table": "sadeeman_travel_profiles",
+        "column": "conversation_id",
+        "nullable": "NO",
+        "generated": "NEVER"
+      },
+      {
+        "type": "uuid",
+        "table": "sadeeman_travel_profiles",
+        "column": "owner_id",
+        "nullable": "NO",
+        "generated": "NEVER"
+      },
+      {
+        "type": "uuid",
+        "table": "sadeeman_travel_profiles",
+        "column": "tenant_id",
+        "nullable": "NO",
+        "generated": "NEVER"
+      },
+      {
+        "type": "integer",
+        "table": "sadeeman_travel_profiles",
+        "column": "version",
+        "nullable": "NO",
+        "generated": "NEVER"
+      },
+      {
+        "type": "jsonb",
+        "table": "sadeeman_travel_profiles",
+        "column": "state",
+        "nullable": "NO",
+        "generated": "NEVER"
+      },
+      {
+        "type": "timestamp with time zone",
+        "table": "sadeeman_travel_profiles",
+        "column": "updated_at",
+        "nullable": "NO",
+        "generated": "NEVER"
+      }
+    ],
+    "indexes": [
+      {
+        "name": "sadeeman_company_packages_code_key",
+        "table": "sadeeman_company_packages",
+        "definition": "CREATE UNIQUE INDEX sadeeman_company_packages_code_key ON public.sadeeman_company_packages USING btree (code)"
+      },
+      {
+        "name": "sadeeman_company_packages_pkey",
+        "table": "sadeeman_company_packages",
+        "definition": "CREATE UNIQUE INDEX sadeeman_company_packages_pkey ON public.sadeeman_company_packages USING btree (id)"
+      },
+      {
+        "name": "sadeeman_company_packages_published_is_demo_days_idx",
+        "table": "sadeeman_company_packages",
+        "definition": "CREATE INDEX sadeeman_company_packages_published_is_demo_days_idx ON public.sadeeman_company_packages USING btree (published, is_demo, days)"
+      },
+      {
+        "name": "sadeeman_travel_profiles_owner_id_conversation_id_idx",
+        "table": "sadeeman_travel_profiles",
+        "definition": "CREATE INDEX sadeeman_travel_profiles_owner_id_conversation_id_idx ON public.sadeeman_travel_profiles USING btree (owner_id, conversation_id)"
+      },
+      {
+        "name": "sadeeman_travel_profiles_pkey",
+        "table": "sadeeman_travel_profiles",
+        "definition": "CREATE UNIQUE INDEX sadeeman_travel_profiles_pkey ON public.sadeeman_travel_profiles USING btree (conversation_id)"
+      }
+    ],
+    "newTables": [
+      {
+        "rls": true,
+        "name": "sadeeman_company_packages",
+        "forceRls": true,
+        "anonSelect": false,
+        "authenticatedDelete": false,
+        "authenticatedInsert": false,
+        "authenticatedSelect": true,
+        "authenticatedUpdate": false
+      },
+      {
+        "rls": true,
+        "name": "sadeeman_travel_profiles",
+        "forceRls": true,
+        "anonSelect": false,
+        "authenticatedDelete": false,
+        "authenticatedInsert": true,
+        "authenticatedSelect": true,
+        "authenticatedUpdate": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "sadeeman_company_packages_check",
+        "table": "sadeeman_company_packages",
+        "definition": "CHECK (((jsonb_typeof(document) = 'object'::text) AND (document ?& ARRAY['id'::text, 'price'::text, 'approval'::text, 'description'::text, 'nights'::text, 'departures'::text, 'inclusions'::text, 'exclusions'::text, 'activities'::text]) AND ((document ->> 'id'::text) = (id)::text) AND (octet_length((document)::text) <= 32000)))"
+      },
+      {
+        "name": "sadeeman_company_packages_check1",
+        "table": "sadeeman_company_packages",
+        "definition": "CHECK ((((length(code) >= 1) AND (length(code) <= 200)) AND ((length(title) >= 1) AND (length(title) <= 200)) AND ((length(destination) >= 1) AND (length(destination) <= 200))))"
+      },
+      {
+        "name": "sadeeman_company_packages_check2",
+        "table": "sadeeman_company_packages",
+        "definition": "CHECK (((NOT published) OR is_demo OR ((NULLIF((document #>> '{approval,sourceRef}'::text[]), ''::text) IS NOT NULL) AND (NULLIF((document #>> '{approval,verifiedAt}'::text[]), ''::text) IS NOT NULL))))"
+      },
+      {
+        "name": "sadeeman_company_packages_code_key",
+        "table": "sadeeman_company_packages",
+        "definition": "UNIQUE (code)"
+      },
+      {
+        "name": "sadeeman_company_packages_days_check",
+        "table": "sadeeman_company_packages",
+        "definition": "CHECK (((days >= 1) AND (days <= 90)))"
+      },
+      {
+        "name": "sadeeman_company_packages_document_check",
+        "table": "sadeeman_company_packages",
+        "definition": "CHECK ((jsonb_typeof((document -> 'isDemo'::text)) = 'boolean'::text))"
+      },
+      {
+        "name": "sadeeman_company_packages_document_check1",
+        "table": "sadeeman_company_packages",
+        "definition": "CHECK (((document ->> 'status'::text) = ANY (ARRAY['draft'::text, 'published'::text, 'archived'::text])))"
+      },
+      {
+        "name": "sadeeman_company_packages_document_check2",
+        "table": "sadeeman_company_packages",
+        "definition": "CHECK (((jsonb_typeof((document -> 'price'::text)) = 'object'::text) AND (jsonb_typeof((document -> 'approval'::text)) = 'object'::text)))"
+      },
+      {
+        "name": "sadeeman_company_packages_pkey",
+        "table": "sadeeman_company_packages",
+        "definition": "PRIMARY KEY (id)"
+      },
+      {
+        "name": "sadeeman_travel_profiles_check",
+        "table": "sadeeman_travel_profiles",
+        "definition": "CHECK ((tenant_id = owner_id))"
+      },
+      {
+        "name": "sadeeman_travel_profiles_check1",
+        "table": "sadeeman_travel_profiles",
+        "definition": "CHECK (((jsonb_typeof(state) = 'object'::text) AND (state ?& ARRAY['version'::text, 'constraints'::text, 'options'::text]) AND (((state ->> 'version'::text))::integer = version) AND (octet_length((state)::text) <= 16000)))"
+      },
+      {
+        "name": "sadeeman_travel_profiles_conversation_id_owner_id_fkey",
+        "table": "sadeeman_travel_profiles",
+        "definition": "FOREIGN KEY (conversation_id, owner_id) REFERENCES sadeeman_conversations(id, owner_id) ON DELETE CASCADE"
+      },
+      {
+        "name": "sadeeman_travel_profiles_pkey",
+        "table": "sadeeman_travel_profiles",
+        "definition": "PRIMARY KEY (conversation_id)"
+      },
+      {
+        "name": "sadeeman_travel_profiles_version_check",
+        "table": "sadeeman_travel_profiles",
+        "definition": "CHECK ((version > 0))"
+      }
+    ],
+    "catalogRecords": 0,
+    "profileRecords": 0
+  },
+  "cleanup": {
+    "remaining_catalog_records": 0,
+    "remaining_profiles": 0,
+    "remaining_test_demo_claims": 0
+  },
+  "originalDataPreservedAfterTestCleanup": true,
+  "finalOriginalDataFingerprints": [
+    {
+      "table_name": "sadeeman_conversations",
+      "row_count": 0,
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "sadeeman_turns",
+      "row_count": 0,
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "sadeeman_messages",
+      "row_count": 0,
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "sadeeman_consents",
+      "row_count": 4,
+      "content_fingerprint": "7c3484e22284efeb065a8dacdf9bea8d"
+    },
+    {
+      "table_name": "sadeeman_memories",
+      "row_count": 0,
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "table_name": "sadeeman_requests",
+      "row_count": 12,
+      "content_fingerprint": "d77f5ebca162fbb33fbd8d55fe683981"
+    },
+    {
+      "table_name": "sadeeman_audit_events",
+      "row_count": 24,
+      "content_fingerprint": "b9f54f7ac7805cf5dc41206aa97df28e"
+    },
+    {
+      "table_name": "sadeeman_session_revocations",
+      "row_count": 2,
+      "content_fingerprint": "c7354c722dee904fe0f55099d9910ac7"
+    },
+    {
+      "table_name": "sadeeman_tool_executions",
+      "row_count": 0,
+      "content_fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    }
+  ],
+  "advisors": {
+    "security": {
+      "result": {
+        "lints": [
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_audit_events` has policies enforced on roles that allow access to anonymous users. Policies include `{own_rows}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_audit_events",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_company_packages` has policies enforced on roles that allow access to anonymous users. Policies include `{readable_company_catalog}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_company_packages",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_consents` has policies enforced on roles that allow access to anonymous users. Policies include `{own_rows}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_consents",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_conversations` has policies enforced on roles that allow access to anonymous users. Policies include `{own_rows}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_conversations",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_memories` has policies enforced on roles that allow access to anonymous users. Policies include `{own_memories}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_memories",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_messages` has policies enforced on roles that allow access to anonymous users. Policies include `{own_rows}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_messages",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_requests` has policies enforced on roles that allow access to anonymous users. Policies include `{own_rows}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_requests",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_session_revocations` has policies enforced on roles that allow access to anonymous users. Policies include `{own_sessions}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_session_revocations",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_tool_executions` has policies enforced on roles that allow access to anonymous users. Policies include `{own_tool_records}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_tool_executions",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_travel_profiles` has policies enforced on roles that allow access to anonymous users. Policies include `{own_travel_profile}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_travel_profiles",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_allow_anonymous_sign_ins",
+            "title": "Anonymous Access Policies",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Detects row level security (RLS) policies that allow access to anonymous users.",
+            "remediation": "Table `public.sadeeman_turns` has policies enforced on roles that allow access to anonymous users. Policies include `{own_rows}`",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "https://supabase.com/docs/guides/database/database-advisors?queryGroups=lint&lint=0012_auth_allow_anonymous_sign_ins",
+                "metadata": {
+                  "name": "sadeeman_turns",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:09.908Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_leaked_password_protection",
+            "title": "Leaked Password Protection Disabled",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "SECURITY"
+            ],
+            "description": "Leaked password protection is currently disabled.",
+            "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "Supabase Auth prevents the use of compromised passwords by checking against HaveIBeenPwned.org. Enable this feature to enhance security.",
+                "metadata": {
+                  "type": "auth",
+                  "entity": "Auth"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "performance": {
+      "result": {
+        "lints": [
+          {
+            "name": "unindexed_foreign_keys",
+            "title": "Unindexed foreign keys",
+            "level": "INFO",
+            "facing": "EXTERNAL",
+            "categories": [
+              "PERFORMANCE"
+            ],
+            "description": "Identifies foreign key constraints without a covering index, which can impact database performance.",
+            "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0001_unindexed_foreign_keys",
+            "count": 7,
+            "findings": [
+              {
+                "detail": "Table \\`public.sadeeman_memories\\` has a foreign key \\`sadeeman_memories_consent_id_owner_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+                "metadata": {
+                  "name": "sadeeman_memories",
+                  "type": "table",
+                  "schema": "public",
+                  "fkey_name": "sadeeman_memories_consent_id_owner_id_fkey",
+                  "fkey_columns": [
+                    4,
+                    2
+                  ]
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              },
+              {
+                "detail": "Table \\`public.sadeeman_memories\\` has a foreign key \\`sadeeman_memories_source_conversation_id_owner_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+                "metadata": {
+                  "name": "sadeeman_memories",
+                  "type": "table",
+                  "schema": "public",
+                  "fkey_name": "sadeeman_memories_source_conversation_id_owner_id_fkey",
+                  "fkey_columns": [
+                    7,
+                    2
+                  ]
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              },
+              {
+                "detail": "Table \\`public.sadeeman_messages\\` has a foreign key \\`sadeeman_messages_conversation_id_owner_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+                "metadata": {
+                  "name": "sadeeman_messages",
+                  "type": "table",
+                  "schema": "public",
+                  "fkey_name": "sadeeman_messages_conversation_id_owner_id_fkey",
+                  "fkey_columns": [
+                    2,
+                    4
+                  ]
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              },
+              {
+                "detail": "Table \\`public.sadeeman_messages\\` has a foreign key \\`sadeeman_messages_turn_id_owner_id_conversation_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+                "metadata": {
+                  "name": "sadeeman_messages",
+                  "type": "table",
+                  "schema": "public",
+                  "fkey_name": "sadeeman_messages_turn_id_owner_id_conversation_id_fkey",
+                  "fkey_columns": [
+                    3,
+                    4,
+                    2
+                  ]
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              },
+              {
+                "detail": "Table \\`public.sadeeman_tool_executions\\` has a foreign key \\`sadeeman_tool_executions_conversation_id_owner_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+                "metadata": {
+                  "name": "sadeeman_tool_executions",
+                  "type": "table",
+                  "schema": "public",
+                  "fkey_name": "sadeeman_tool_executions_conversation_id_owner_id_fkey",
+                  "fkey_columns": [
+                    4,
+                    2
+                  ]
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              },
+              {
+                "detail": "Table \\`public.sadeeman_travel_profiles\\` has a foreign key \\`sadeeman_travel_profiles_conversation_id_owner_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+                "metadata": {
+                  "name": "sadeeman_travel_profiles",
+                  "type": "table",
+                  "schema": "public",
+                  "fkey_name": "sadeeman_travel_profiles_conversation_id_owner_id_fkey",
+                  "fkey_columns": [
+                    1,
+                    2
+                  ]
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              },
+              {
+                "detail": "Table \\`public.sadeeman_turns\\` has a foreign key \\`sadeeman_turns_conversation_id_owner_id_fkey\\` without a covering index. This can lead to suboptimal query performance.",
+                "metadata": {
+                  "name": "sadeeman_turns",
+                  "type": "table",
+                  "schema": "public",
+                  "fkey_name": "sadeeman_turns_conversation_id_owner_id_fkey",
+                  "fkey_columns": [
+                    2,
+                    3
+                  ]
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              }
+            ]
+          },
+          {
+            "name": "auth_rls_initplan",
+            "title": "Auth RLS Initialization Plan",
+            "level": "WARN",
+            "facing": "EXTERNAL",
+            "categories": [
+              "PERFORMANCE"
+            ],
+            "description": "Detects if calls to \\`current_setting()\\` and \\`auth.<function>()\\` in RLS policies are being unnecessarily re-evaluated for each row",
+            "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0003_auth_rls_initplan",
+            "count": 1,
+            "findings": [
+              {
+                "detail": "Table \\`public.sadeeman_company_packages\\` has a row level security policy \\`readable_company_catalog\\` that re-evaluates current_setting() or auth.<function>() for each row. This produces suboptimal query performance at scale. Resolve the issue by replacing \\`auth.<function>()\\` with \\`(select auth.<function>())\\`. See [docs](https://supabase.com/docs/guides/database/postgres/row-level-security#call-functions-with-select) for more info.",
+                "metadata": {
+                  "name": "sadeeman_company_packages",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              }
+            ]
+          },
+          {
+            "name": "unused_index",
+            "title": "Unused Index",
+            "level": "INFO",
+            "facing": "EXTERNAL",
+            "categories": [
+              "PERFORMANCE"
+            ],
+            "description": "Detects if an index has never been used and may be a candidate for removal.",
+            "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index",
+            "count": 2,
+            "findings": [
+              {
+                "detail": "Index \\`sadeeman_audit_events_owner_id_id_idx\\` on table \\`public.sadeeman_audit_events\\` has not been used",
+                "metadata": {
+                  "name": "sadeeman_audit_events",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              },
+              {
+                "detail": "Index \\`sadeeman_session_revocations_owner_id_idx\\` on table \\`public.sadeeman_session_revocations\\` has not been used",
+                "metadata": {
+                  "name": "sadeeman_session_revocations",
+                  "type": "table",
+                  "schema": "public"
+                },
+                "observed_at": "2026-11-05T15:29:10.187Z"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "health": {
+      "result": {
+        "lints": []
+      }
+    }
+  },
+  "localChecks": {
+    "build": "PASS",
+    "typecheck": "PASS",
+    "lint": "PASS_69_FILES",
+    "tests": {
+      "passed": 170,
+      "total": 170,
+      "files": 16,
+      "seconds": 20.82
+    }
+  },
+  "runtime": {
+    "primary": "gemini",
+    "fallback": "groq",
+    "openRouter": false,
+    "retries": 0,
+    "catalog": true,
+    "travelContext": true,
+    "durableTravelContext": true,
+    "demo": false
+  },
+  "liveModelCalls": 0,
+  "searchCalls": 0,
+  "fullM3Acceptance": "OPEN_PENDING_EXPLICIT_LIVE_APPROVAL_AND_QUOTA"
+}

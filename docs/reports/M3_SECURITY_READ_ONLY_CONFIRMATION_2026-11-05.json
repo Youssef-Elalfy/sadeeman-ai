@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-05T16:08:49.210Z",
+  "projectRef": "ujdzysbowngtkwndgoqf",
+  "policiesUnchanged": true,
+  "functionsAndExecutePrivilegesUnchanged": true,
+  "tableGrantsUnchanged": true,
+  "authUserCountUnchanged": true,
+  "catalogStillEmpty": true,
+  "proposalsUnapplied": true,
+  "exposedSchemasDatabaseSetting": [],
+  "privateSchemaRestProbe": "SCHEMA_EXPOSURE_READ_FAILED_NOT_RETRIED_EXPOSURE_UNVERIFIED",
+  "remoteWrites": 0,
+  "modelOrSearchCalls": 0
+}

@@ -1,0 +1,16 @@
+{
+  "evidenceBasis": "Observed successful one-shot probe stdout",
+  "status": "REAL_TAVILY_TRAVEL_SEARCH_PASSED",
+  "authentication": "accepted",
+  "searchRequests": 1,
+  "searchDepth": "basic",
+  "retrievedAt": "2026-11-05T13:53:37.394Z",
+  "sources": [
+    { "id": "src_7d34948d3aeb3182", "title": "JNTO - Official Tourism Guide for Japan Travel", "sourceUrl": "https://www.japan.travel/en/ca", "publicationEstimateAt": null, "publicationDateBasis": "provider_estimate_or_unknown" },
+    { "id": "src_4fda0614415c1266", "title": "Japan Brochures and Guides for Travel - Japan National Tourism Organization", "sourceUrl": "https://www.japan.travel/en/au/plan/brochures", "publicationEstimateAt": null, "publicationDateBasis": "provider_estimate_or_unknown" }
+  ],
+  "unknownPublicationDates": 2,
+  "credentialsDisplayed": false,
+  "keyRotationClaimed": false,
+  "note": "User explicitly authorized temporary use of the current key despite earlier exposure. Publication estimates were unavailable; retrieval is not a claim of recent publication."
+}

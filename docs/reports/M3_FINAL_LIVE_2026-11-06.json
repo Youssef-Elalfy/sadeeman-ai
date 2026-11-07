@@ -1,0 +1,51 @@
+{
+  "status": "FAILED",
+  "stage": "M3-FINAL-001",
+  "lastHttp": 200,
+  "code": "EVALUATION_FAILURE",
+  "searchRequests": 0,
+  "observed": [
+    {
+      "tool": "propose_travel_constraints",
+      "status": "rejected",
+      "code": "CONSTRAINT_CONFLICT",
+      "constraintFeedback": {
+        "reason": "CONSTRAINT_VALUE_NOT_EXPLICIT"
+      }
+    },
+    {
+      "tool": "propose_travel_constraints",
+      "status": "rejected",
+      "code": "CONSTRAINT_CONFLICT",
+      "constraintFeedback": {
+        "reason": "CONSTRAINT_VALUE_NOT_EXPLICIT"
+      }
+    }
+  ],
+  "evaluated": 0,
+  "credentialsDisplayed": false,
+  "checkedAt": "2026-11-05T22:49:22.915Z",
+  "providerFailures": [],
+  "providerBudget": {
+    "requests": 2,
+    "maximum": 10,
+    "attempts": [
+      {
+        "provider": "gemini",
+        "outcome": "ok"
+      },
+      {
+        "provider": "gemini",
+        "outcome": "ok"
+      }
+    ]
+  },
+  "feedbackDelivered": [
+    {
+      "tool": "propose_travel_constraints",
+      "code": "CONSTRAINT_CONFLICT",
+      "paths": []
+    }
+  ],
+  "evaluations": []
+}

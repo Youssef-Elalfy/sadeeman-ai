@@ -1,0 +1,65 @@
+{
+  "product": {
+    "arabicName": "سَدِيمًا",
+    "englishName": "SADEEMAN AI",
+    "slug": "sadeeman-ai",
+    "arabicTagline": "رحلتك أبعد من الخيال.",
+    "englishTagline": "Beyond Destinations. Beyond Expectations.",
+    "isWorkingBrand": true
+  },
+  "identity": {
+    "direction": "Celestial Dunes",
+    "symbol": "Orbital Lantern",
+    "keywords": [
+      "curious",
+      "warm",
+      "trustworthy",
+      "alive",
+      "premium",
+      "agentic"
+    ],
+    "prohibitedStyleBorrowing": [
+      "ocean navy",
+      "cyan and teal gradients",
+      "generic plane clipart",
+      "humanoid fake receptionist"
+    ]
+  },
+  "colors": {
+    "nightPlum": "#26192F",
+    "orchidCharcoal": "#35233F",
+    "sunsetCoral": "#E66F50",
+    "deepCoral": "#AA402A",
+    "amethyst": "#B795E4",
+    "purpleAccent": "#7C4D9E",
+    "amber": "#F7B267",
+    "ivory": "#FFF6EC",
+    "chalkRose": "#FFF0E5",
+    "figInk": "#291A31",
+    "dustyMauve": "#BFAFC5",
+    "errorBrick": "#D45449",
+    "success": "#39744D"
+  },
+  "typography": {
+    "arabicBody": "Alexandria",
+    "arabicDisplay": "Reem Kufi",
+    "englishBody": "DM Sans",
+    "englishDisplay": "Sora",
+    "arabicFallback": "IBM Plex Sans Arabic"
+  },
+  "motion": {
+    "baseMs": 220,
+    "ambientPeriodSeconds": 16,
+    "parallaxMaxPx": 8,
+    "reducedMotion": "static",
+    "renderer": "React Three Fiber / Three.js with SVG fallback"
+  },
+  "productScope": {
+    "experience": "standalone agent workspace",
+    "marketingWebsite": false,
+    "crm": true,
+    "voice": true,
+    "liveBooking": false,
+    "businessAutomation": "out_of_scope"
+  }
+}

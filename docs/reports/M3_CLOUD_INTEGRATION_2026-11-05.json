@@ -1,0 +1,30 @@
+{
+  "status": "M3_CLOUD_DATABASE_TESTS_PASSED",
+  "checkedAt": "2026-11-05T15:27:54.024Z",
+  "runId": "274bdc6e-e5e8-48c8-8b89-b11ce00868a3",
+  "projectRef": "ujdzysbowngtkwndgoqf",
+  "requestCount": 42,
+  "createdTestUsers": 2,
+  "fixtureRecords": 2,
+  "fixtureLabel": "FICTIONAL DEMO — TEST ONLY",
+  "fixtureCleanup": "VERIFIED_REMOVED_EXACT_TWO_DEMO_RECORDS_AND_TEMPORARY_DEMO_CLAIMS",
+  "results": {
+    "twoDistinctAuthenticatedUsers": true,
+    "persistedCatalogSearch": true,
+    "persistedCatalogComparison": true,
+    "fictionalNotVerifiedOrBookable": true,
+    "ordinalDetailsAndUnknownSchedules": true,
+    "catalogPersistsAcrossClientRestart": true,
+    "userMetadataCannotRevealDemo": true,
+    "catalogInsertAndUpdateDenied": true,
+    "twoUserProfileIsolation": true,
+    "contextAndMessagesPersist": true,
+    "atomicVersionConflictRollback": true,
+    "conversationDeletionRemovesProfile": true,
+    "testSessionsRevoked": true
+  },
+  "modelCalls": 0,
+  "searchCalls": 0,
+  "openRouterCalls": 0,
+  "credentialsDisplayed": false
+}
