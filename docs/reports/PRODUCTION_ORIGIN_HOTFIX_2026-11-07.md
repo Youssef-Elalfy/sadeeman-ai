@@ -40,6 +40,8 @@ The existing Vercel project is `prj_WpK40ySZ0FUdiBPINRNoKZClItLT`, team `team_Be
 
 The backend origin fix is **live and verified**. The prepared frontend redirect/error-message patch is **not claimed deployed** until the necessary frontend release succeeds. Only Vercel frontend publishing remains; the backend must not be redeployed again for this patch.
 
+The reviewed frontend patch is committed locally as `c6ed15d`. Publishing it to the existing private GitHub origin was attempted without interactive prompts or history rewriting, but Git returned `could not read Username ... terminal prompts disabled`; it was not pushed. Vercel can instead deploy the reviewed local tracked-source archive after CLI sign-in, so GitHub reauthentication is not required to finish the frontend release. No new Vercel project or temporary/public-source deployment should be created as a workaround.
+
 The owner can refresh the existing Vercel CLI sign-in from this project with:
 
 ```powershell
