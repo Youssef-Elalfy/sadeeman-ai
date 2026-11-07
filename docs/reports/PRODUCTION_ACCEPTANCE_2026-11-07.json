@@ -1,0 +1,134 @@
+{
+  "sourceCommit": "45b91a5e14716a2345ea61df1a0dfb8c720c9ce8",
+  "frontendUrl": "https://sadeeman-ai-youssef-elalfys-projects.vercel.app",
+  "backendUrl": "https://sadeeman-api-production.up.railway.app",
+  "repositoryUrl": "https://github.com/Youssef-Elalfy/sadeeman-ai",
+  "deployment": {
+    "frontend": {
+      "id": "dpl_GaHJ4eaCg1JC1U92uLVUvtFt43FQ",
+      "state": "READY"
+    },
+    "backend": {
+      "id": "030fc632-45f4-4d27-ac23-623f3dfdc023",
+      "state": "SUCCESS",
+      "replicas": 1
+    }
+  },
+  "localTests": {
+    "passed": 429,
+    "total": 429,
+    "files": 34,
+    "command": "node node_modules/vitest/vitest.mjs run --maxWorkers=1"
+  },
+  "publicChecks": [
+    {
+      "name": "backend_health",
+      "status": 200,
+      "allowOrigin": null,
+      "csp": false,
+      "hsts": false
+    },
+    {
+      "name": "backend_exact_frontend_cors",
+      "status": 200,
+      "allowOrigin": "https://sadeeman-ai-youssef-elalfys-projects.vercel.app",
+      "csp": false,
+      "hsts": false
+    },
+    {
+      "name": "backend_untrusted_origin",
+      "status": 403,
+      "allowOrigin": null,
+      "csp": false,
+      "hsts": false
+    },
+    {
+      "name": "backend_unauthenticated",
+      "status": 401,
+      "allowOrigin": null,
+      "csp": false,
+      "hsts": false
+    },
+    {
+      "name": "frontend",
+      "status": 200,
+      "allowOrigin": null,
+      "csp": true,
+      "hsts": true
+    },
+    {
+      "name": "frontend_api_proxy",
+      "status": 200,
+      "allowOrigin": null,
+      "csp": false,
+      "hsts": true
+    }
+  ],
+  "browser": {
+    "origin": "https://sadeeman-ai-youssef-elalfys-projects.vercel.app",
+    "status": 200,
+    "hasCsp": true,
+    "allScriptsNonced": true,
+    "noInlineScriptAllowance": true,
+    "desktop": {
+      "width": 1440,
+      "scroll": 1440
+    },
+    "mobile": {
+      "width": 390,
+      "scroll": 390
+    },
+    "pageErrors": [],
+    "cspErrors": [],
+    "privacyLink": 1,
+    "noSecretPatterns": true
+  },
+  "completedLiveTurns": [
+    {
+      "name": "chat",
+      "runId": "9c4d80c0-5aa6-4e10-bdfe-aa628c0ee2e5",
+      "status": "completed",
+      "sseStatus": 200,
+      "hasRealAnswer": true,
+      "tracePersisted": true,
+      "usage": {
+        "inputTokens": 4681,
+        "outputTokens": 40
+      },
+      "providerFailures": []
+    },
+    {
+      "name": "followup",
+      "runId": "232f5fad-6cda-43ea-bc2a-b022f3bf63a8",
+      "status": "completed",
+      "sseStatus": 200,
+      "hasRealAnswer": true,
+      "tracePersisted": true,
+      "usage": {
+        "inputTokens": 4755,
+        "outputTokens": 35
+      },
+      "providerFailures": []
+    }
+  ],
+  "persistedMessages": 4,
+  "sessionSecurityFixtureCleanup": {
+    "userId": "005eeacb-9800-4b00-8174-1e57eb1c57f0",
+    "users": 0,
+    "sessions": 0,
+    "refreshTokens": 0,
+    "readOnlyVerified": true
+  },
+  "remaining": [
+    "Interrupted public test guest cleanup: 6ee07be3-69b5-41cd-b388-d8a382be0d50",
+    "Authenticated browser history rendering",
+    "One basic Tavily search and company-catalog tool execution",
+    "Real public image/PDF turns",
+    "Groq transcription and Gemini TTS",
+    "Provider fallback failures covered offline; no intentional production outage injected"
+  ],
+  "fullAcceptance": "OPEN",
+  "providerCallsRepeatedOnResume": 0,
+  "paidPlansEnabled": false,
+  "supabaseSchemasChanged": false
+}

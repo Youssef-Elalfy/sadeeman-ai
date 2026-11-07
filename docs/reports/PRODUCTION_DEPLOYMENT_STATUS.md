@@ -12,16 +12,24 @@ Private source: https://github.com/Youssef-Elalfy/sadeeman-ai. Current local pro
 - Lockfile advisory audit: 299 packages, zero advisories returned by the npm bulk advisory endpoint. Source secret scan passed (235 allowlisted files).
 
 ## Local verification
-- Full Vitest run: 428/428 across 34 files; additional API concurrency regression added and all 19 release tests pass (429 tests in current inventory). No live providers in automated tests.
+- Final full Vitest run: 429/429 across 34 files, 68.49 seconds; all 19 release tests included. No live providers in automated tests.
 - Contracts/API builds, web/tests strict typechecks and full Biome check passed. Next production build passed with dynamic nonce-protected pages.
 - Local Edge/Playwright: HTML 200, all scripts nonced, zero page/CSP errors, no document overflow at 1440px/390px, privacy link present, no provider-key patterns in HTML. Backend was intentionally not running in this UI-only check. Mobile heading width corrected after screenshot inspection.
 
 ## Hosting checkpoint
 - Railway trial verified: 30 days, 5 dollars remaining credit, no billing upgrade or payment changes. Dedicated project 70b31570-653b-4d18-846c-22265da57655; service 7145d735-1b65-451b-8463-0c1db1ce2775; production environment 635453a5-fb86-419a-8189-1acae6a307d1.
-- Railway domain allocated: https://sadeeman-api-production.up.railway.app. Deployment/health not yet verified. 39 reviewed server variables securely sent through stdin and values compared without printing. Only the rotated Tavily key was used; OpenRouter key absent.
+- Railway domain allocated: https://sadeeman-api-production.up.railway.app. Docker build and deployment succeeded. Health verified HTTP 200. Active deployment 030fc632-45f4-4d27-ac23-623f3dfdc023 uses source 45b91a5 and one replica. 39 reviewed server variables securely sent through stdin and values compared without printing. Only the rotated Tavily key was used; OpenRouter key absent.
 - Vercel Hobby verified. Project prj_WpK40ySZ0FUdiBPINRNoKZClItLT created; Node 24, apps/web monorepo root, contracts build and HTTPS API_ORIGIN prepared. No backend secrets uploaded to Vercel.
-- Automatic approval review denied clearing Vercel deployment protection; protection remains unchanged. Public access must be tested before requesting an exact setting change.
-- No public frontend/backend success or live E2E claim until actual deployment and checks complete.
+- Initial automatic review denied clearing Vercel protection. The owner subsequently explicitly approved ssoProtection:null only for this new project; it was applied and public access verified. Frontend deployment dpl_GaHJ4eaCg1JC1U92uLVUvtFt43FQ is READY at https://sadeeman-ai-youssef-elalfys-projects.vercel.app.
+- Both public HTTPS endpoints and the frontend API proxy returned 200. Exact-origin CORS accepted; unrelated origin 403; unauthenticated conversations 401. Browser verified nonce CSP, zero JS/CSP errors and no overflow at desktop/mobile widths. Current startup logs contain safe configuration status only.
 
 ## Next
-Push reviewed source without history rewrite, deploy source-only Railway archive, deploy Vercel from current private repository, verify actual public endpoints and bounded acceptance. Stop on trial/network/billing blockers.
+Complete only the interrupted live acceptance remainder after temporary-identity cleanup and replacement-test permission. Do not replay successful calls or rerun migrations. No paid service or billing changes were made. The Railway free trial is time/credit limited; ongoing availability beyond its allowance is not guaranteed.
+
+## Bounded public acceptance — actual evidence
+- Two genuine live chat/follow-up turns completed through the frontend HTTPS API, with SSE 200, nonempty answers, no provider failures and tracePersisted=true. Supabase readback contained four messages.
+- Test run began 2026-11-07T02:45:06Z. The harness/process was interrupted before authenticated browser-history, research/catalog, image/PDF or voice gates recorded outcomes, and before its finally cleanup. Do not mark them passed. Its tokens were held only in process/browser memory and cannot be recovered.
+- Interrupted public-test identity: 6ee07be3-69b5-41cd-b388-d8a382be0d50; session 0d6cc702-7bae-4fd9-a635-18abd6260cef; own synthetic conversation dcbf9b61-aeef-476a-a3bc-568fa744673b. Ownership/project/anonymous claims were validated during the test. No existing user was changed. Owner Auth-dashboard cleanup is pending.
+- On resume, one targeted read-only Supabase check returned: MCP tool codex_apps/supabase.execute_sql is not available to the model. No retry loop or remote SQL writes followed. Therefore current deletion state is unverified.
+- An ignored local recovery helper now verifies Windows DPAPI encryption round-trip without network access; no replacement identity or provider call has been made. Await the requested owner cleanup/one replacement approval.
+- Full deployment acceptance remains OPEN for the untested feature gates. Existing mandatory production guards remain enforced.
