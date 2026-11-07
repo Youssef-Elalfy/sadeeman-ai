@@ -2,6 +2,12 @@
 
 ## Resumed checkpoint (supersedes the original sign-in blocker below)
 
+**Latest result:** reviewed, secret-scanned source was pushed to the dedicated PRIVATE repository https://github.com/Youssef-Elalfy/sadeeman-ai (initial commit `0c62cb5bd85392fb0ef3a7cc6d57aba9d15c265e`). No old MASAR repository was used. 230 allowlisted files were scanned before the initial push; environment/private/cache/generated files and screenshots were excluded. Public media required by the current UI was included. The CI workflow was not activated.
+
+The controlled Cloud claim/expiry checks now pass; evidence is in `PRODUCTION_SESSION_CLAIMS_2026-11-07.json`. Exactly one approved anonymous identity was created. It is signed out with zero remaining sessions/active refresh tokens and zero owned conversations/memory/consent/messages/turns/travel profiles. User `005eeacb-9800-4b00-8174-1e57eb1c57f0` awaits owner deletion in Supabase Authentication > Users. The production guard must remain enabled until cleanup is verified and the remaining release requirements are met. No production site or backend has been deployed.
+
+Private-schema exposure probe returned HTTP 406 / PGRST106, confirming the private schema was rejected by the Data API. After the deployment-preparation edits, 102 targeted regression/security/attachment tests passed and API compilation, strict typecheck and Next production build passed. Docker execution and public end-to-end acceptance are not yet tested.
+
 Railway authentication now verified. Read-only account checks report a verified registered account with no restriction flags and a 30-day trial with $5 remaining credit. No paid plan or payment method was enabled. The existing Supabase project `ujdzysbowngtkwndgoqf` is ACTIVE_HEALTHY. Current security advisors report the same eleven guest-policy warnings and disabled leaked-password protection warning; there are zero application tables without FORCE RLS, and the session validator is present. Private-schema API exposure and remaining release checks are not yet marked passed.
 
 The owner confirms the old Tavily key has been revoked and a rotated key is configured locally. No key value is printed or committed. Deployment entry-point, Docker and HTTPS proxy preparation is local only. The production startup guard remains intact. Source scanning/publication and the remaining security checks are in progress; public deployment is not complete. The initial checkpoint below is historical evidence, not the current authentication state.
