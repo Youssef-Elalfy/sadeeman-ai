@@ -1,53 +1,49 @@
-# SADEEMAN AI — Railway deployment guide
+# SADEEMAN AI — Railway deployment guide (one service)
 
-SADEEMAN is a pnpm monorepo: a **Fastify API** (`apps/api`) and a **Next.js web app**
-(`apps/web`) that share `packages/contracts`. It needs **two Railway services** from the same
-GitHub repository. Data lives in the existing **Supabase** project (`ujdzysbowngtkwndgoqf`);
-no Railway database is needed.
+SADEEMAN runs as **one Railway service** built from the root **`/Dockerfile`**. Inside the
+single container:
 
-| | API service | Web service |
-|---|---|---|
-| Suggested name | `sadeeman-api` | `sadeeman-web` |
-| Root directory | `/` (repository root — the monorepo shares one lockfile) | `/` (repository root) |
-| Config-as-code file | `/railway.json` (default) | `/railway.web.json` (set this in the service) |
-| Builder | Dockerfile `Dockerfile` | Dockerfile `Dockerfile.web` |
-| Build (inside the image) | `pnpm install --frozen-lockfile` → build contracts → build api | `pnpm install --frozen-lockfile` → build contracts → `next build` |
-| Start | `node apps/api/dist/main.js` | `next start apps/web --hostname 0.0.0.0 --port $PORT` |
-| Port | Railway's `PORT` (binds `0.0.0.0` when `NODE_ENV=production`) | Railway's `PORT` |
-| Health check | `/api/v1/health` | `/privacy` |
-| Replicas | **1** (rate/admission limits are per process) | 1 or more |
+- **Next.js web** listens on Railway's public `PORT` (`0.0.0.0`).
+- **Fastify API** listens on `127.0.0.1:4000` only (not reachable from outside).
+- The web server forwards every `/api/*` request to the internal API.
+- `tools/start-production.mjs` starts the API, waits for it to be healthy, starts the web
+  server, forwards shutdown signals to both, and exits (so Railway restarts) if either one stops.
 
-Do not override the build or start commands in the Railway UI: the Dockerfiles define them.
+Data lives in the existing **Supabase** project `ujdzysbowngtkwndgoqf`; no Railway database.
 
-## 0. Before deploying (one-time, in Supabase)
-1. **Anonymous sign-ins** must stay enabled (Authentication → Sign In / Providers). Guests use them.
-2. **Apply the catalog migration** `supabase/migrations/20261112130000_masar_demo_catalog_public_read.sql`
-   to project `ujdzysbowngtkwndgoqf` (SQL editor, or the Supabase CLI). It only replaces the catalog
-   SELECT policy (adds read access to `masar-demo-*` rows) and inserts the four FICTIONAL DEMO
-   packages if absent. Without it the app works, but the company catalog is empty in production.
+| Setting | Value |
+|---|---|
+| Services | **1** |
+| Root directory | `/` (repository root) |
+| Config-as-code | `/railway.json` (default) |
+| Builder | Dockerfile → `/Dockerfile` |
+| Build | inside the image: `pnpm install --frozen-lockfile`, then build contracts, API and web |
+| Start | `node tools/start-production.mjs` (the Dockerfile `CMD`; do not override) |
+| Public port | Railway's `PORT` (injected automatically) |
+| Health check | `/api/v1/health` (passes only when the web server **and** the API answer), timeout 120 s |
+| Replicas | **1** (rate and admission limits are per process) |
 
-## 1. Create the two services
-1. Railway → **New Project** → **Deploy from GitHub repo** → `Youssef-Elalfy/sadeeman-ai`.
-   Rename the created service to `sadeeman-api`.
-2. In the same project → **New** → **GitHub Repo** → the same repo → rename to `sadeeman-web`.
-3. `sadeeman-web` → **Settings → Config-as-code → Railway config file** → `/railway.web.json`.
-   (`sadeeman-api` keeps the default `/railway.json`.)
-4. Keep both services' root directory empty (`/`).
+## 0. One-time Supabase checks
+1. **Anonymous sign-ins** enabled (Authentication → Sign In / Providers): guests use them.
+2. **Apply** `supabase/migrations/20261112130000_masar_demo_catalog_public_read.sql` to project
+   `ujdzysbowngtkwndgoqf` (SQL editor or Supabase CLI). It only replaces the catalog SELECT policy
+   (adds read access to `masar-demo-*` rows) and inserts the four FICTIONAL DEMO packages if
+   absent. Without it everything works except the company catalog, which stays empty.
 
-## 2. Generate the public domains first
-Each service → **Settings → Networking → Generate Domain**. You get two URLs such as
-`https://sadeeman-api-production.up.railway.app` and `https://sadeeman-web-production.up.railway.app`.
-They are needed in the variables below (the API only accepts browser requests from the exact web
-origin, and the web build bakes in the API URL). If Railway asks for a port, use the one shown in the
-service's deploy logs (the app listens on Railway's `PORT`).
+## 1. Create the service
+1. Railway → **New Project** → **Deploy from GitHub repo** → `Youssef-Elalfy/sadeeman-ai` (branch `main`).
+2. Leave the root directory empty and the build/start commands unset (the Dockerfile defines them).
+3. **Settings → Networking → Generate Domain.** You get e.g.
+   `https://sadeeman-ai-production.up.railway.app`. If Railway asks for a target port, use the
+   port the logs show for Next.js (Railway's `PORT`, usually `8080`).
+4. Add the variables below (the API refuses to start until `WEB_ORIGIN` matches this domain), then deploy.
 
-## 3. API service variables (`sadeeman-api`)
+## 2. Variables
 Secrets are marked `<secret>`: paste them only into Railway's Variables tab, never into git.
 
 | Variable | Value |
 |---|---|
-| `NODE_ENV` | `production` |
-| `WEB_ORIGIN` | the web URL, e.g. `https://sadeeman-web-production.up.railway.app` (no trailing slash) |
+| `WEB_ORIGIN` | the generated domain, e.g. `https://sadeeman-ai-production.up.railway.app` (https, no trailing slash) |
 | `PERSISTENCE_MODE` | `supabase` |
 | `SUPABASE_URL` | `https://ujdzysbowngtkwndgoqf.supabase.co` |
 | `SUPABASE_PROJECT_REF` | `ujdzysbowngtkwndgoqf` |
@@ -69,51 +65,40 @@ Secrets are marked `<secret>`: paste them only into Railway's Variables tab, nev
 | `ENABLE_COMPANY_CATALOG` | `true` |
 | `ENABLE_TRAVEL_CONTEXT` | `true` |
 | `ENABLE_TRAVEL_CONTEXT_PERSISTENCE` | `true` |
-| `ENABLE_VOICE` | `true` (Groq speech-to-text + Gemini text-to-speech, same keys) |
+| `ENABLE_VOICE` | `true` (Groq speech-to-text + Gemini text-to-speech; same keys) |
 | `ENABLE_STYLE_GUARD` | `true` |
 | `RATE_LIMIT_MAX` | `120` |
 
-Leave unset (safe defaults): `PORT` (Railway sets it), `GROQ_STT_MODEL` (`whisper-large-v3-turbo`),
-`GEMINI_TTS_MODEL` (`gemini-3.1-flash-tts-preview`), `ENABLE_OPENROUTER_RUNTIME`, `ALLOW_CATALOG_DEMO`,
-`ALLOW_SYNTHETIC_PROVIDER_DATA` (all `false`). No database password, service-role key or
-`DATABASE_URL` is used by the API.
+Set by the image — **do not add**: `NODE_ENV=production`, `API_INTERNAL_PORT=4000`,
+`API_ORIGIN=http://127.0.0.1:4000` (baked into the web build). `PORT` is injected by Railway.
+Defaults that need no variable: `GROQ_STT_MODEL` (`whisper-large-v3-turbo`), `GEMINI_TTS_MODEL`
+(`gemini-3.1-flash-tts-preview`); `ENABLE_OPENROUTER_RUNTIME`, `ALLOW_CATALOG_DEMO`,
+`ALLOW_SYNTHETIC_PROVIDER_DATA` stay `false`. No database password, service-role key or
+`DATABASE_URL` is used.
 
-The API refuses to start in production unless these hold (release guard): HTTPS `WEB_ORIGIN` on
-`*.up.railway.app`, `PERSISTENCE_MODE=supabase` for the verified project, guest auth on, Gemini with
-Groq fallback configured, `PROVIDER_RETRIES=0`, research key present when research is on.
+The API's release guard stops the container at startup if: `WEB_ORIGIN` is not HTTPS on
+`*.up.railway.app`, persistence is not Supabase for the verified project, guest auth is off, Gemini
+or the Groq fallback is not configured, `PROVIDER_RETRIES` ≠ 0, or research is on without a key.
 
-## 4. Web service variables (`sadeeman-web`)
-| Variable | Value |
-|---|---|
-| `API_ORIGIN` | the API URL, e.g. `https://sadeeman-api-production.up.railway.app` (no trailing slash) |
-
-`API_ORIGIN` is read **at build time** (Next.js bakes the `/api/*` proxy into the build) and at start.
-The browser only talks to the web domain; the web server forwards `/api/*` to the API. If you change
-the API domain later, redeploy the web service.
-
-## 5. Deploy order
-1. Deploy `sadeeman-api`. Logs should end with `SADEEMAN AI API ready on 0.0.0.0:<port>` and a
-   readiness report (persistence: Supabase; research, catalog, voice enabled).
-2. Deploy `sadeeman-web` (after `API_ORIGIN` is set).
-
-## 6. Test the deployment
-1. `https://<api-domain>/api/v1/health` → `"status":"ok"`, `"persistence":"supabase"`,
-   `"research":"configured_not_verified"`, `"voice":true`.
-2. `https://<web-domain>/api/v1/health` → the same JSON (proves web → API forwarding).
-3. Open `https://<web-domain>/`, send a message (a guest session is created automatically):
+## 3. Test the deployment
+1. Logs show `SADEEMAN AI API ready on 127.0.0.1:4000` with the readiness report (persistence
+   Supabase; research, catalog, voice enabled), then Next.js `Ready`.
+2. `https://<domain>/api/v1/health` → `"status":"ok"`, `"persistence":"supabase"`,
+   `"catalog":"database_connected_not_inventory_verified"`, `"voice":true`.
+3. Open `https://<domain>/` and send messages (a guest session starts automatically):
    - General: `يعني إيه API في البرمجة؟`
-   - Company packages: `إيه برامج الشركة المتاحة بأسعارها؟` → Fayoum 3,200 / Hurghada 6,500 /
-     Sharm El Sheikh 7,800 / Nubia 9,200 EGP per adult, marked FICTIONAL DEMO (needs step 0.2).
+   - Packages: `إيه برامج الشركة المتاحة بأسعارها؟` → Fayoum 3,200 / Hurghada 6,500 /
+     Sharm El Sheikh 7,800 / Nubia 9,200 EGP per adult, FICTIONAL DEMO (needs step 0.2).
    - Research: `عايز خطة رحلة للمالديف 5 أيام` → plan with cited sources.
-   - Voice: microphone button and "استمع" (Listen) on a reply.
-4. Reload the page: the conversation stays in the history (Supabase persistence).
+   - Voice: microphone button and "استمع" on a reply.
+4. Reload: the conversation is still in the history (Supabase persistence).
 
 ## Troubleshooting
 | Symptom | Cause / fix |
 |---|---|
-| API crashes with `Production guard: …` | A required variable above is missing or wrong (the message names no values). |
-| API crashes with `Supabase target is not the verified Sadeeman project` | `SUPABASE_URL`/`SUPABASE_PROJECT_REF` mismatch. |
-| Web build fails: `API_ORIGIN must be the API service URL` | Set `API_ORIGIN` on the web service, then redeploy. |
-| Chat shows a connection/origin error (`FORBIDDEN_ORIGIN` 403) | `WEB_ORIGIN` must equal the web URL exactly (https, no slash). |
+| Logs: `Configuration error` / `Production guard: …` | A variable above is missing or wrong (messages name fields, never values). |
+| Logs: `Supabase target is not the verified Sadeeman project` | `SUPABASE_URL` / `SUPABASE_PROJECT_REF` mismatch. |
+| Logs: `[start] API did not become healthy within 60 s` | Usually a configuration error printed just above it. |
+| Chat fails with an origin error (403) | `WEB_ORIGIN` must equal the public domain exactly. If you add a custom domain, the guard currently accepts only `*.up.railway.app`. |
 | Company catalog empty | Apply the migration in step 0.2. |
-| "كل نماذج الذكاء الاصطناعي عليها ضغط دلوقتي" | Gemini overloaded and Groq's per-minute limit hit; transient (see logs: `[agent] run failed … attempts=`). |
+| "كل نماذج الذكاء الاصطناعي عليها ضغط دلوقتي" | Gemini overloaded and Groq per-minute limit reached; transient (logs: `[agent] run failed … attempts=`). |

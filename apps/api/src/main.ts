@@ -30,14 +30,22 @@ try {
     process.exit(1);
   }
   const app = await buildServer({ config });
+  // Single-container deploy: the supervisor sets API_LISTEN_HOST=127.0.0.1 so
+  // only the web server is reachable from outside the container.
+  const host =
+    process.env.API_LISTEN_HOST === "127.0.0.1"
+      ? "127.0.0.1"
+      : config.NODE_ENV === "production"
+        ? "0.0.0.0"
+        : "127.0.0.1";
   await app.listen({
-    host: config.NODE_ENV === "production" ? "0.0.0.0" : "127.0.0.1",
+    host,
     port: config.PORT,
   });
   const report = startupReport(config);
   process.stdout.write(
     [
-      `SADEEMAN AI API ready on ${config.NODE_ENV === "production" ? "0.0.0.0" : "127.0.0.1"}:${config.PORT}`,
+      `SADEEMAN AI API ready on ${host}:${config.PORT}`,
       ...report.lines,
       ...report.warnings.map((warning) => `  ! ${warning}`),
       "",

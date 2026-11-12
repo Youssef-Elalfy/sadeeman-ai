@@ -1,4 +1,4 @@
-# SADEEMAN deployment variables (Railway: API + web)
+# SADEEMAN deployment variables (Railway, one service)
 
 Step-by-step setup: see `RAILWAY_DEPLOYMENT_GUIDE.md` at the repository root.
 
@@ -13,12 +13,12 @@ dashboards, never in git. The API refuses to start in production if the release 
    if absent. Without it, hosted users see an empty company catalog.
 2. Supabase Auth: anonymous sign-ins enabled (guest entry).
 
-## Railway — API service (`railway.json`, Dockerfile, health `/api/v1/health`)
+## Railway — single service (`/Dockerfile`, `railway.json`, health `/api/v1/health`)
 | Variable | Value |
 |---|---|
 | `NODE_ENV` | `production` |
 | `PORT` | set by Railway |
-| `WEB_ORIGIN` | `https://<web-service>.up.railway.app` (**guard**: https, `*.up.railway.app`) |
+| `WEB_ORIGIN` | `https://<service>.up.railway.app` (**guard**: https, `*.up.railway.app`) |
 | `PERSISTENCE_MODE` | `supabase` (**guard**) |
 | `SUPABASE_URL` | `https://ujdzysbowngtkwndgoqf.supabase.co` |
 | `SUPABASE_PROJECT_REF` | `ujdzysbowngtkwndgoqf` (must match `config/supabase-target.json`) |
@@ -43,10 +43,7 @@ dashboards, never in git. The API refuses to start in production if the release 
 | `ENABLE_OPENROUTER_RUNTIME`, `ALLOW_CATALOG_DEMO`, `ALLOW_SYNTHETIC_PROVIDER_DATA` | `false` (**guard**) |
 | `RATE_LIMIT_MAX` | ≤ `120` |
 
-## Railway — web service (`Dockerfile.web`, `railway.web.json`)
-| Variable | Value |
-|---|---|
-| `API_ORIGIN` | `https://<api-service>.up.railway.app` (build time and runtime) |
+The image sets `NODE_ENV`, `API_INTERNAL_PORT=4000` and `API_ORIGIN=http://127.0.0.1:4000` itself.
 
 ## Local development (`.env` at the repo root)
 Same provider/feature values, but `NODE_ENV=development`, `PERSISTENCE_MODE=local`
