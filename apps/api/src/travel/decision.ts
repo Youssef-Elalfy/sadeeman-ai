@@ -25,7 +25,7 @@ export function assessTravel(
       : action === "research"
         ? ["destination"]
         : action === "itinerary"
-          ? ["destination", "days"]
+          ? ["destination"]
           : action === "age_pricing"
             ? ["travellers", "adults", "children"]
             : ["currency", "budgetMinor", "budgetBasis", "travellers"];
@@ -72,22 +72,25 @@ export function assessTravel(
       ? alreadyAsked
         ? "Do not repeat the question. Continue nonfinancial planning or explain why this action must wait."
         : "Ask one natural essential question. Continue useful planning that does not depend on the missing fact."
-      : "Enough grounded information for this action. Do not ask for unrelated optional facts.",
+      : action === "itinerary" && c.days === undefined
+        ? "Act now: assume a typical duration for this destination, state it in one line and offer to adjust."
+        : "Enough grounded information for this action. Do not ask for unrelated optional facts.",
     commercialAvailability: "unverified",
     bookingSupported: false,
   };
 }
 
-export const conversationalPolicy = `Use ASK / ACT / ANSWER, not a form checklist.
-ASK only when an unknown materially blocks the intended next action. Ask one short natural question, using the actual conversation; never repeat a question already answered. If the user cannot answer, offer useful planning without assuming that fact.
-ACT with tools when the action's grounded requirements exist. Research and basic itinerary planning do not require age breakdown, budget inclusions, departure details or all financial fields. Leave adults/children unknown when the user says people/persons. Do not infer adults=travellers. Use assess_travel_request when unsure whether an action needs clarification.
-ANSWER naturally, including unrelated conversation; return to travel when the user does. Never force a travel pivot. Preserve confirmed constraints, dates and context across turns. A proposed update is not saved until a successful grounded tool result and turn commit.
-When the user says ميزانيتنا, shared budget is an intent, not strong authorization for a financial comparison. Confirm total versus per person before financial conclusions. Ask about flights only when making budget-dependent recommendations. No bookings or age-based price claims are supported.
-For propose_travel_constraints include a separate exact quote for EVERY changed field, including budgetBasis. Omit unknown optional fields. When clarification follows the last user message, source=previous_user can recover an as-yet-unconfirmed field from that actual user message; it cannot overwrite confirmed facts. Do not invent facts or silently omit requested monetary changes.
-Tool errors are private feedback: use all reported issues for ONE complete correction, or ask conversationally. Never tell a customer about Zod, JSON fields, schemas, validation failures, internal tool names or error codes. If correction fails, ask the essential question or explain what can still be planned; never claim the rejected action succeeded.`;
+export const conversationalPolicy = `
+
+Travel decisions (ASK / ACT / ANSWER, not a form checklist)
+- Default to ACT or ANSWER. ASK only when an unknown truly blocks the next action and no sensible default exists; ask one short natural question and never repeat a question already answered. If the user cannot or does not answer, continue with stated assumptions.
+- Research, recommendations and itineraries need only a destination: when days, dates, party or budget are missing, assume typical values, say so in one line and deliver the full plan. Leave adults/children unknown when the user says people/persons; do not infer adults=travellers.
+- Before financial conclusions on a shared budget (ميزانيتنا), confirm total versus per person; ask about flights only for budget-dependent recommendations. No bookings or age-based price claims.
+- Preserve confirmed constraints, dates and context across turns. A proposed update is not saved until a successful grounded tool result and turn commit. For propose_travel_constraints include a separate exact quote for EVERY changed field, including budgetBasis; omit unknown optional fields. source=previous_user can recover an unconfirmed field from the previous user message; it cannot overwrite confirmed facts.
+- Tool errors are private feedback: use all reported issues for ONE complete correction, or continue conversationally. Never tell the user about Zod, JSON fields, schemas, validation failures, internal tool names or error codes, and never claim a rejected action succeeded.`;
 
 export function hasInternalDiagnostics(text: string) {
-  return /\b(?:zod|INVALID_TOOL_ARGUMENTS|CONSTRAINT_CONFLICT|CONSTRAINT_VALUE_NOT_EXPLICIT|CURRENT_USER_EVIDENCE_REQUIRED|CURRENCY_AMBIGUOUS|expectedVersion|budgetBasis|propose_travel_constraints|validationIssues)\b/i.test(
+  return /\b(?:zod|INVALID_TOOL_ARGUMENTS|CONSTRAINT_CONFLICT|CONSTRAINT_VALUE_NOT_EXPLICIT|CURRENT_USER_EVIDENCE_REQUIRED|CURRENCY_AMBIGUOUS|expectedVersion|budgetBasis|propose_travel_constraints|validationIssues|priceText|amountMinor|partyTotalMinor|sourceRef)\b/i.test(
     text,
   );
 }

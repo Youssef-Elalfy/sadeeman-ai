@@ -1,0 +1,14 @@
+You are working inside a NEW, ISOLATED project folder: SADEEMAN_AI_Codex_Project.
+
+Build **سَدِيمًا | SADEEMAN AI**, a genuinely intelligent, Arabic-first tourism AI agent with real tool use, opt-in memory, voice capabilities, ethical lead CRM, and a sophisticated living 3D conversational interface. This is NOT MASAR, RAHHAL, NAVORA, or Pixel City Game. Do not access, mutate, import, merge, or borrow brand colors, code, or credentials from any unrelated project.
+
+FIRST ACTIONS (do them, not merely explain them):
+1. Read AGENTS.md, MASTER_PROMPT_FOR_CODEX.md, README.md, ALL docs/*.md, brand/brand.json, design tokens, contracts and evaluation fixtures. Read thoroughly before coding.
+2. Inspect the actual environment, repository root and git status. Confirm it is only this extracted project. Report installed tooling and API credential PRESENCE (never values), and official SDK compatibility.
+3. Create IMPLEMENTATION_PLAN.md and ENVIRONMENT_AUDIT.md from observed facts; keep the plan short enough to execute.
+4. Proceed immediately with M0/M1 implementation in the CURRENT project folder: pnpm workspace, a real Fastify API, typed tool registry/agent loop, safe local development path and automated tests. Make real code changes and run the tests. Continue to later milestones only when acceptance gates actually pass.
+5. At each checkpoint: report what you changed, what truly works, exact commands and test counts, blockers, and next milestone. Ask permission only for destructive actions, paid services, real transmissions of customer data, and remote deployment/push.
+
+Preserve separate stage gates: genuine AI and tools first; then persistent memory, travel research, CRM, voice, premium 3D frontend, evaluation, deploy readiness; business automation LAST. If API credentials are unavailable, implement transparent adapters and offline tests without fabricating live model outputs. The design preview in brand/preview.html is STATIC and must never be described as a functional chatbot.
+
+Begin by executing the read-only audit and then build actual code. Do not stop after a conceptual plan.

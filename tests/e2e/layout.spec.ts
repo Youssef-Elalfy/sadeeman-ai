@@ -73,7 +73,7 @@ async function audit(page: Page, extra: string[] = []) {
         .querySelector(".composer")
         ?.getBoundingClientRect();
       const clippedHistory = [
-        ...document.querySelectorAll(".history-list button"),
+        ...document.querySelectorAll(".history-list .history-open"),
       ].filter(
         (b) =>
           b.scrollWidth > b.clientWidth + 1 ||
@@ -212,12 +212,12 @@ for (const [width, height, label] of viewports) {
     // Long history + long conversation: one natural message scroll.
     await mockLongConversation(page);
     await page.reload();
-    await expect(page.locator(".history-list button")).toHaveCount(30);
+    await expect(page.locator(".history-list .history-open")).toHaveCount(30);
     if (width < 1024) {
       await page.getByRole("button", { name: "القائمة والمحادثات" }).click();
       await expect(page.locator(".sidebar")).toBeVisible();
     }
-    await page.locator(".history-list button").first().click();
+    await page.locator(".history-list .history-open").first().click();
     await expect(page.locator(".message")).toHaveCount(40);
     await expect(page.locator(".welcome")).toHaveCount(0);
     const busy = await audit(page);

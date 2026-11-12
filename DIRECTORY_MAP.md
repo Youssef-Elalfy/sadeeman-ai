@@ -1,0 +1,22 @@
+# Directory map / source-of-truth guide
+
+- `START_HERE_CODEX.txt`: exact first message for Codex.
+- `AGENTS.md`: enduring operating instructions.
+- `MASTER_PROMPT_FOR_CODEX.md`: detailed end-to-end build mission.
+- `docs/00…14`: architecture, product, quality and visual requirements; avoid changing order/scope without logging decision.
+- `templates/`: executable system-prompt proposal and ethical consent copy (not runtime wiring).
+- `brand/brand.json`: authoritative colors, fonts and official Arabic wordmark.
+- `brand/tokens.css` and `brand/preview.html`: static design source and concept only.
+- `contracts/`: desired API and tool event outlines, not functioning services.
+- `fixtures/company_packages.DEMO_ONLY.json`: *fictional* test data, not bookable inventory.
+- `tests/evals/scenarios.jsonl`: expected behavior cases, not executed tests.
+- `apps/api`: implemented Fastify runtime, adapters/streaming, bounded tools, development auth, and M2 persistence/auth repositories and explicit memory APIs.
+- `packages/contracts`: implemented shared strict Zod contracts.
+- `supabase/migrations`: shared PostgreSQL schema with RLS, consent checks, deletion and metadata audit; local verification does not prove hosted setup.
+- `apps/web`: future frontend destination, unchanged in M2.
+- `ENVIRONMENT_AUDIT.md`, `IMPLEMENTATION_PLAN.md`, `docs/reports/`: observed environment, roadmap and actual gate evidence.
+- `tests/*.test.ts`: deterministic API, runtime and adapter tests; test doubles only here.
+- `tools/chat.ts`, `tools/smoke.ts`: truthful local CLI and real HTTP smoke check.
+- `tools/db-migrate.ts`, `tools/smoke-persistence.ts`, `tools/providers-check.ts`: local migration, restart/persistence verification and explicit real-provider tool compatibility probe.
+- `docs/REAL_API_SETUP_GUIDE.md`: Windows configuration and official service references.
+- `tools/validate_starter.py`: verifies file integrity only; no dependencies required.

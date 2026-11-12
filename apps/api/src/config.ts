@@ -25,6 +25,8 @@ const Env = z.object({
     .default("gemini-3.1-flash-tts-preview"),
   ENABLE_REAL_PROVIDER: flag("false"),
   ENABLE_PROVIDER_STREAMING: flag("false"),
+  // MASAR style guard (one private rewrite on language/register drift).
+  ENABLE_STYLE_GUARD: flag("true"),
   PERSISTENCE_MODE: z
     .enum(["ephemeral", "local", "supabase"])
     .default("ephemeral"),
@@ -34,7 +36,8 @@ const Env = z.object({
   SUPABASE_PUBLISHABLE_KEY: z.string().default(""),
   ENABLE_SUPABASE_GUEST: flag("false"),
   REQUIRE_GUEST_CAPTCHA: flag("false"),
-  GUEST_RATE_LIMIT_MAX: integer(5, 1, 30),
+  // Above 30 / 20 only for the isolated QA harness (NODE_ENV=test).
+  GUEST_RATE_LIMIT_MAX: integer(5, 1, 300),
   ALLOW_SYNTHETIC_PROVIDER_DATA: flag("false"),
   MODEL_PROVIDER: z.enum(["gemini", "groq", "openrouter"]).default("gemini"),
   FALLBACK_PROVIDERS: z.string().default(""),
@@ -56,14 +59,18 @@ const Env = z.object({
   MAX_SEARCH_REQUESTS_PER_HOUR: integer(20, 1, 100),
   MAX_AGENT_REQUESTS_PER_HOUR: integer(30, 1, 60),
   MAX_VOICE_REQUESTS_PER_HOUR: integer(30, 1, 60),
-  MAX_GUESTS_PER_HOUR: integer(10, 1, 20),
+  MAX_GUESTS_PER_HOUR: integer(10, 1, 300),
   MAX_CONCURRENT_PROVIDER_OPERATIONS: integer(2, 1, 4),
   MAX_AGENT_TOOL_ROUNDS: integer(5, 1, 5),
   MAX_TOOL_CALLS_PER_TURN: integer(12, 1, 20),
-  MODEL_TIMEOUT_MS: integer(15000, 50, 30000),
-  TURN_TIMEOUT_MS: integer(60000, 100, 120000),
+  // MASAR measured ~21 s for one Gemini Flash Lite call on the full agent
+  // prompt (2026-11-04); 15 s abandoned answers that were about to arrive.
+  MODEL_TIMEOUT_MS: integer(30000, 50, 45000),
+  TURN_TIMEOUT_MS: integer(90000, 100, 120000),
   PROVIDER_RETRIES: integer(1, 0, 2),
-  MAX_TURN_TOKENS: integer(16000, 128, 32000),
+  // A research turn = tool call + results + final answer; 16k was measured
+  // too small for one research round (2026-11-12).
+  MAX_TURN_TOKENS: integer(32000, 128, 64000),
   MAX_OUTPUT_TOKENS: integer(2048, 64, 4096),
   MAX_CONTEXT_CHARS: integer(32000, 1000, 64000),
   // Above 120 only for the isolated QA harness (NODE_ENV=test), see loadConfig.
@@ -88,7 +95,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
       c.PERSISTENCE_MODE !== "supabase" ||
       origin.protocol !== "https:" ||
       origin.origin !== c.WEB_ORIGIN ||
-      !origin.hostname.endsWith(".vercel.app") ||
+      // The web service is hosted on Railway (no Vercel).
+      !origin.hostname.endsWith(".up.railway.app") ||
       !c.ENABLE_SUPABASE_GUEST ||
       !c.ENABLE_REAL_PROVIDER ||
       c.MODEL_PROVIDER !== "gemini" ||
@@ -107,6 +115,14 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
         "Production guard: durable Sadeeman auth, HTTPS, real Gemini/Groq and safe provider settings are required",
       );
   }
+  if (
+    (parsed.data.GUEST_RATE_LIMIT_MAX > 30 ||
+      parsed.data.MAX_GUESTS_PER_HOUR > 20) &&
+    parsed.data.NODE_ENV !== "test"
+  )
+    throw new Error(
+      "Guest limits above 30/hour (rate) or 20/hour (admission) are allowed only in NODE_ENV=test",
+    );
   if (parsed.data.RATE_LIMIT_MAX > 120 && parsed.data.NODE_ENV !== "test")
     throw new Error(
       "RATE_LIMIT_MAX above 120 is allowed only in NODE_ENV=test",

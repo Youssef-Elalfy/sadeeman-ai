@@ -1,0 +1,217 @@
+{
+  "brand": "سَدِيمًا | SADEEMAN AI",
+  "isFunctionalApp": false,
+  "fileCountBeforeManifest": 42,
+  "files": [
+    {
+      "path": ".env.example",
+      "bytes": 617,
+      "sha256": "ad08aa228b906680f668a9028147c9dea23948c736776bfa38f49c48c102ea54"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 170,
+      "sha256": "b06eeb896619b898aad13ce03f9f6ab6d4fddc38c1d0437cb9124b21775d654e"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 3876,
+      "sha256": "917c9c1138da4958ed0db6d88df234a5d0e61938c060fc5b96ab3e3cfb4ce97d"
+    },
+    {
+      "path": "DIRECTORY_MAP.md",
+      "bytes": 1046,
+      "sha256": "c468d50a64c8fa83d54d60ab0faef1cea6bef5f7dfda3f4bb735dd3442141124"
+    },
+    {
+      "path": "MASTER_PROMPT_FOR_CODEX.md",
+      "bytes": 17228,
+      "sha256": "de62768499e95b140422644b38e55d0aef918632e38caebef6eeb7f49d928ee4"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3832,
+      "sha256": "5d922d62b949ea2ea7402a6a308965df30ff24b706ae7c276c1ad20ed082425b"
+    },
+    {
+      "path": "START_HERE_CODEX.txt",
+      "bytes": 2114,
+      "sha256": "5b7853d634b8a01a90e6553b1dc328022cc8306361c79be608630da15d913270"
+    },
+    {
+      "path": "apps/api/README.md",
+      "bytes": 268,
+      "sha256": "c310e64aa42fa99cb5876a7927cf4dbe9cbcfed2833cf690a39f20e50dbd11d7"
+    },
+    {
+      "path": "apps/web/README.md",
+      "bytes": 338,
+      "sha256": "3bdb861ff34685b39afe5fac0eeb03b2e9e86b926475c20fa9d8635212501439"
+    },
+    {
+      "path": "brand/README.md",
+      "bytes": 563,
+      "sha256": "4f4f910444ffc6e85cb9975ffbb531fc0ce7e1864b580fe213fd4c1d63a2cc1c"
+    },
+    {
+      "path": "brand/brand.json",
+      "bytes": 1636,
+      "sha256": "d61b3781a4f9898f4d3748bbf8fdf238c8f33d5f9d3474973b04efe2d09a1f7a"
+    },
+    {
+      "path": "brand/logo-orbital-lantern.svg",
+      "bytes": 1097,
+      "sha256": "b340281ed75f45749af5a5e4c77f2053fb3fccfdb7e1dd955b01a985cbf5a908"
+    },
+    {
+      "path": "brand/preview.html",
+      "bytes": 6682,
+      "sha256": "58785ebc8df580c2064f235aef6046d5189709af4c0026425164becca26faa8d"
+    },
+    {
+      "path": "brand/tokens.css",
+      "bytes": 1514,
+      "sha256": "3823733f95fc01b496232f369cd24ac2c7b7c2ea441dd88963b860b2302e4aa3"
+    },
+    {
+      "path": "contracts/README.md",
+      "bytes": 313,
+      "sha256": "6db5be81fd74b52cd0125047c8d6a25d439f2deebb7da7d4d1f48d9c90153238"
+    },
+    {
+      "path": "contracts/agent-events.schema.json",
+      "bytes": 1215,
+      "sha256": "5016a35369a1ea0060a6b8efd5b670328e6ec3d823d0935de969ddc84f78b9bc"
+    },
+    {
+      "path": "contracts/openapi-outline.yaml",
+      "bytes": 2274,
+      "sha256": "61f28eb4502a8036f2dcac222b9121ab9a8b343653909b595e9a3acad32d577e"
+    },
+    {
+      "path": "contracts/tool-registry-outline.json",
+      "bytes": 4585,
+      "sha256": "3a01033251fcea4b8b2da876c2771c716833cd61aaffc3d30a0ff792dcaa9483"
+    },
+    {
+      "path": "docs/00_PRODUCT_SCOPE.md",
+      "bytes": 2713,
+      "sha256": "4d05368258dda62e1e36c5f8f2b87de197d153cff2606800365ae27ab3ae8468"
+    },
+    {
+      "path": "docs/01_BRAND_GUIDELINES.md",
+      "bytes": 3488,
+      "sha256": "419ad99f5d8eda4ebd613470b92a09709c94181d8429a1fab1df3aa2e3c0ec47"
+    },
+    {
+      "path": "docs/02_TECH_ARCHITECTURE.md",
+      "bytes": 3648,
+      "sha256": "7d8a3a42ef5d00d4fa05bfe3d8c26c3f9a676da2fa9bac65161207b6a87aacf0"
+    },
+    {
+      "path": "docs/03_AGENT_PERSONALITY.md",
+      "bytes": 2836,
+      "sha256": "e0b9f2097a5bde586bc96cc62c06022eca3e50b321e055ec21f8e4936cbfdc06"
+    },
+    {
+      "path": "docs/04_KNOWLEDGE_TOOLS.md",
+      "bytes": 2715,
+      "sha256": "b4ca1af00d599cfe748b318032adb77de8a31ad204d4fdef7fea4e8616d8f78a"
+    },
+    {
+      "path": "docs/05_FRONTEND_3D.md",
+      "bytes": 3698,
+      "sha256": "4b166096909b9fe797339bb2b972ec6bd0fea5acb8df5a0dd61499dc2534a7c3"
+    },
+    {
+      "path": "docs/06_MEMORY_CRM.md",
+      "bytes": 2534,
+      "sha256": "d2c324bc0a26ddf8442e5fce59d815fad49cafd3b687625bae77c76772729643"
+    },
+    {
+      "path": "docs/07_VOICE_AI.md",
+      "bytes": 1823,
+      "sha256": "ec28f9e7c0e31feda3ef848c640233f1b45152465a9c6d51cebb70106d5dfafd"
+    },
+    {
+      "path": "docs/08_SECURITY_PRIVACY.md",
+      "bytes": 2103,
+      "sha256": "0fd6c7a9b181f7f0dc4fa84ffb57aeaf1bed6261d5fc8e7023da44e168a6dfb1"
+    },
+    {
+      "path": "docs/09_TESTING_EVALUATION.md",
+      "bytes": 2212,
+      "sha256": "b666e9ff42f555a4d0446ad6fce5f5dd96fa12e796b60415b834963a9d7e2e07"
+    },
+    {
+      "path": "docs/10_ROADMAP.md",
+      "bytes": 1370,
+      "sha256": "6a0e8baa8ba3adb5b6494066e21b50f966889122e714b2cc662866f825373f70"
+    },
+    {
+      "path": "docs/11_PROVIDER_DECISIONS.md",
+      "bytes": 2571,
+      "sha256": "e9ea17f26d24c7c3017080966bc49a7c566496d5f9e82e9d24a7c92ccd68b068"
+    },
+    {
+      "path": "docs/12_DELIVERY_OPERATIONS.md",
+      "bytes": 1363,
+      "sha256": "67cea529ac6ecf33af8d7bebbb97b932177e2193f855901885eee4e0f50d2991"
+    },
+    {
+      "path": "docs/13_UI_ACCEPTANCE.md",
+      "bytes": 1440,
+      "sha256": "bacdd7a0a10828aeabac484f9db3c41c594729db9e85987ce5da4d053c040e2a"
+    },
+    {
+      "path": "docs/14_MODEL_EVAL_RUBRIC.md",
+      "bytes": 1256,
+      "sha256": "d2aaa0f054fd1829e8bb4737790807bfb54e58eace6fc48d27e13f3ed89323bf"
+    },
+    {
+      "path": "docs/reports/README.md",
+      "bytes": 243,
+      "sha256": "c9cd2e89ecdc532b9eab79ee9c1d1561caa6d17b55f2456afa6626b3b0fc5942"
+    },
+    {
+      "path": "fixtures/company_packages.DEMO_ONLY.json",
+      "bytes": 2752,
+      "sha256": "14e2a9f507c21130369d1006dede96672f47fbcbadad5c73472fb3d2bd619bb0"
+    },
+    {
+      "path": "packages/contracts/README.md",
+      "bytes": 193,
+      "sha256": "2c78675d2d10b3010790b566ec2c47d69c2db7f604e1b7433a6319857870cbcc"
+    },
+    {
+      "path": "supabase/migrations/README.md",
+      "bytes": 217,
+      "sha256": "686023ccc7631313c046f9422ba3f4678b658f2085bf054ed4542faf310c6dda"
+    },
+    {
+      "path": "templates/AGENT_SYSTEM_PROMPT_TEMPLATE.md",
+      "bytes": 2431,
+      "sha256": "e982b85cc900298789f25668861d84a2ffc9ecd44c561bda44ee29c490980026"
+    },
+    {
+      "path": "templates/PRIVACY_AND_LEAD_COPY.md",
+      "bytes": 1372,
+      "sha256": "2063aa4259fcd362a3b73978113e3490e118d416117bbb325ee73233579c3b9c"
+    },
+    {
+      "path": "tests/evals/README.md",
+      "bytes": 562,
+      "sha256": "aab226df1800371e94a430374d1e8328fa7e1b85db5ef351529e37c3918d2524"
+    },
+    {
+      "path": "tests/evals/scenarios.jsonl",
+      "bytes": 16877,
+      "sha256": "393d99b01d2e69b1c1770d16593b294e0aa10771dd1ca5e8341ebc9979b4e109"
+    },
+    {
+      "path": "tools/validate_starter.py",
+      "bytes": 1718,
+      "sha256": "af674fe77a765733e89317fb8a0da9fde82af05ed74aa7b539e7887a16e1e496"
+    }
+  ]
+}

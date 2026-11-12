@@ -195,11 +195,11 @@ test("conversation-first: minimal navigation, history, no CRM or account pages",
   await expect(page.getByText(/العملاء والطلبات|CRM|حسابي/)).toHaveCount(0);
   await page.getByRole("button", { name: "محادثة جديدة" }).click();
   await expect(
-    page.locator(".history-list button", { hasText: "TEST ONLY hello" }),
+    page.locator(".history-list .history-open", { hasText: "TEST ONLY hello" }),
   ).toBeVisible();
   // A second click reuses the still-empty conversation instead of piling up.
   await page.getByRole("button", { name: "محادثة جديدة" }).click();
-  await expect(page.locator(".history-list button")).toHaveCount(1);
+  await expect(page.locator(".history-list .history-open")).toHaveCount(1);
   // Old deep links open the matching settings tab instead of a page.
   await page.goto("/#/profile");
   const dialog = page.getByRole("dialog", { name: "الإعدادات" });
@@ -224,7 +224,7 @@ test("truthful unavailable model, voice fallback, settings and reduced motion", 
     .getByRole("textbox", { name: "رسالتك لسَدِيمًا" })
     .fill("TEST ONLY سفر");
   await page.getByRole("button", { name: "إرسال الرسالة" }).click();
-  await expect(page.getByRole("alert")).toBeVisible();
+  await expect(page.locator(".global-error")).toBeVisible();
   await expect(
     page.getByRole("textbox", { name: "رسالتك لسَدِيمًا" }),
   ).toHaveValue("TEST ONLY سفر");
@@ -304,7 +304,7 @@ test("truthful unavailable model, voice fallback, settings and reduced motion", 
   await expect(
     page.getByRole("textbox", { name: "رسالتك لسَدِيمًا" }),
   ).toBeVisible();
-  await expect(page.locator(".history-list button")).toHaveCount(0);
+  await expect(page.locator(".history-list .history-open")).toHaveCount(0);
 });
 test("memory approval/write/erase through the actual consent APIs", async ({
   page,
@@ -370,18 +370,18 @@ test("conversation titles come from the first message and persist", async ({
   await box.fill("عايز أسافر تركيا 5 أيام");
   await page.getByRole("button", { name: "إرسال الرسالة" }).click();
   await expect(page.locator(".global-error")).toBeVisible();
-  await expect(page.locator(".history-list button").first()).toContainText(
-    "رحلة إلى تركيا",
-  );
+  await expect(
+    page.locator(".history-list .history-open").first(),
+  ).toContainText("رحلة إلى تركيا");
   await expect(page.locator(".topbar-title")).toHaveText("رحلة إلى تركيا");
   // A later message never renames it.
   await page.getByRole("button", { name: "إغلاق التنبيه" }).click();
   await box.fill("طب خلي الميزانية 20 ألف");
   await page.getByRole("button", { name: "إرسال الرسالة" }).click();
   await page.reload();
-  await expect(page.locator(".history-list button").first()).toContainText(
-    "رحلة إلى تركيا",
-  );
+  await expect(
+    page.locator(".history-list .history-open").first(),
+  ).toContainText("رحلة إلى تركيا");
   // New chat starts untitled and isolated.
   await page.getByRole("button", { name: "محادثة جديدة" }).click();
   await expect(page.locator(".topbar-title")).toHaveText("محادثة جديدة");

@@ -102,7 +102,19 @@ export class TavilySearch {
                 include_domains: input.domains,
                 include_domains_mode: "restrict",
               }
-            : {}),
+            : {
+                // Video/social pages are not citable travel sources (live
+                // finding: 2 of 3 Lisbon sources were YouTube videos).
+                exclude_domains: [
+                  "youtube.com",
+                  "tiktok.com",
+                  "instagram.com",
+                  "facebook.com",
+                  "pinterest.com",
+                  "x.com",
+                  "twitter.com",
+                ],
+              }),
         }),
       });
       if (!response.ok) {

@@ -2,7 +2,7 @@
 alter policy readable_company_catalog on public.sadeeman_company_packages to authenticated
 using (
   (select auth.uid()) is not null and (select public.sadeeman_session_active()) and published
-  and (not is_demo or (select coalesce(
+  and (not is_demo or code like 'masar-demo-%' or (select coalesce(
     nullif(current_setting('request.jwt.claims',true),'')::jsonb#>>'{app_metadata,catalog_demo}',
     'false'
   ))='true')

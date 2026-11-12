@@ -92,7 +92,7 @@ describe("natural ASK ACT ANSWER — offline only", () => {
     const first = assessTravel("itinerary", s);
     expect(first).toMatchObject({
       decision: "ASK",
-      missingFields: ["destination", "days"],
+      missingFields: ["destination"],
       suggestedQuestion: "حابب تسافر فين؟",
     });
     expect(assessTravel("itinerary", s, first.suggestedQuestion)).toMatchObject(

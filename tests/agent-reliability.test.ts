@@ -169,7 +169,8 @@ describe("agent reliability — real orchestration with mocked providers", () =>
         };
       },
     ]);
-    const c = setup(adapter),
+    // At the former 16k turn budget only a tools-off answer still fits.
+    const c = setup(adapter, testConfig({ MAX_TURN_TOKENS: 16000 })),
       run = c.state.createRun(c.conversation);
     await new AgentRuntime(c.router, createTools(), c.config).execute(
       run,

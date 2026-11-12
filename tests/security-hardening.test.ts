@@ -214,20 +214,32 @@ describe("security proposals in real local PostgreSQL only — Cloud unchanged",
       { user_metadata: { catalog_demo: true } },
       { app_metadata: { catalog_demo: true } },
     ]) {
-      const old = await asUser(
+      // The baseline is the historical schema (before the 2026-11-12 MASAR
+      // demo migration), so compare everything except masar-demo rows.
+      const query =
+        "select id from public.sadeeman_company_packages where code not like 'masar-demo-%' order by id";
+      const old = await asUser<{ id: string }>(
         baseline,
         a.identity,
         { session_id: a.sid, ...extra },
-        "select id from public.sadeeman_company_packages order by id",
+        query,
       );
-      const next = await asUser(
+      const next = await asUser<{ id: string }>(
         hardened,
         b.identity,
         { session_id: b.sid, ...extra },
-        "select id from public.sadeeman_company_packages order by id",
+        query,
       );
       expect(next.rows).toEqual(old.rows);
       expect(next.rows.length).toBe("app_metadata" in extra ? 1 : 0);
+      // The hardened policy keeps the four seeded MASAR packages readable.
+      const masar = await asUser<{ id: string }>(
+        hardened,
+        b.identity,
+        { session_id: b.sid, ...extra },
+        "select id from public.sadeeman_company_packages where code like 'masar-demo-%'",
+      );
+      expect(masar.rows).toHaveLength(4);
     }
   });
   it("adds only the two missing index paths and keeps existing indexes", async () => {

@@ -87,6 +87,12 @@ export class PersistentCompanyCatalog implements CatalogRepository {
       days: p.days,
       nights: p.nights,
       price: p.price,
+      // Human-readable amount in MAJOR units: models misread amountMinor
+      // (piasters/cents) as whole pounds (live finding: 6,500 EGP → "650,000").
+      priceText:
+        p.price.amountMinor === null || p.price.currency === null
+          ? "unknown"
+          : `${(p.price.amountMinor / 100).toLocaleString("en-US")} ${p.price.currency} ${p.price.basis.replace("_", " ")}`,
       ...packageCost(p, c),
       classification: p.isDemo ? "company_demo" : "company_verified",
       label: p.isDemo
@@ -97,7 +103,8 @@ export class PersistentCompanyCatalog implements CatalogRepository {
       datesKnown: p.departures.length > 0,
       inclusions: p.inclusions,
       exclusions: p.exclusions,
-      approval: p.approval,
+      // Internal provenance text (sourceRef) is never shown to the model.
+      approval: { verifiedAt: p.approval.verifiedAt },
     };
   }
   private result(
@@ -116,7 +123,7 @@ export class PersistentCompanyCatalog implements CatalogRepository {
           full ? { ...p, ...this.summary(p, c) } : this.summary(p, c),
         ),
         constraints: c,
-        note: "Company database records, not external listings or live inventory. Empty departures/activities and null prices mean unknown. Budget arithmetic excludes anything not priced in the record; no FX conversion.",
+        note: "Quote prices from priceText (major currency units); amountMinor and partyTotalMinor are in minor units (1/100). Company database records, not external listings or live inventory. Empty departures/activities and null prices mean unknown. Budget arithmetic excludes anything not priced in the record; no FX conversion.",
       },
     };
   }

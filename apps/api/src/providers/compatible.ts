@@ -1,6 +1,7 @@
+import { setTimeout as delay } from "node:timers/promises";
 import { ModelOutput } from "@sadeeman/contracts";
 import { z } from "zod";
-import { providerError, SafeError } from "../errors.js";
+import { providerError, type RateHint, SafeError } from "../errors.js";
 import { readCompletionStream } from "./sse.js";
 import type { Generation, ModelAdapter, ModelInput } from "./types.js";
 
@@ -53,7 +54,33 @@ export class CompatibleAdapter implements ModelAdapter {
     private readonly model: string,
     private readonly fetcher: typeof fetch = fetch,
   ) {}
+  /**
+   * One bounded retry, only when the provider itself asks for a short wait:
+   * a per-minute 429 whose Retry-After is at most 10 s (MASAR-style). Daily
+   * quotas, longer waits and every other error are returned immediately.
+   */
   async generate(
+    input: ModelInput,
+    signal: AbortSignal,
+    onDelta?: (text: string) => void,
+  ): Promise<Generation> {
+    try {
+      return await this.once(input, signal, onDelta);
+    } catch (error) {
+      const wait = error instanceof SafeError ? error.retryAfterMs : undefined;
+      if (
+        !(error instanceof SafeError) ||
+        error.code !== "PROVIDER_QUOTA" ||
+        error.providerFailure?.quotaScope !== "per_minute" ||
+        wait === undefined ||
+        wait > 10_000
+      )
+        throw error;
+      await delay(wait, undefined, { signal });
+      return this.once(input, signal, onDelta);
+    }
+  }
+  private async once(
     input: ModelInput,
     signal: AbortSignal,
     onDelta?: (text: string) => void,
@@ -84,6 +111,7 @@ export class CompatibleAdapter implements ModelAdapter {
           : {}),
       };
     });
+    let hint: RateHint = {};
     try {
       const response = await this.fetcher(endpoints[this.id], {
         method: "POST",
@@ -112,6 +140,29 @@ export class CompatibleAdapter implements ModelAdapter {
       });
       if (!response.ok) {
         await response.body?.cancel();
+        // Headers only (no body): Retry-After seconds and whether the request
+        // allowance (daily on Groq) is spent; otherwise it is a per-minute limit.
+        const retry = Number(response.headers.get("retry-after"));
+        const retryAfterMs =
+          Number.isFinite(retry) && retry > 0
+            ? Math.round(retry * 1000)
+            : undefined;
+        if (response.status === 429)
+          hint = {
+            quotaScope:
+              response.headers.get("x-ratelimit-remaining-requests") === "0"
+                ? "daily"
+                : retryAfterMs ||
+                    response.headers.has("x-ratelimit-remaining-tokens")
+                  ? "per_minute"
+                  : "unknown",
+            ...(retryAfterMs ? { retryAfterMs } : {}),
+          };
+        else if (response.status === 413)
+          hint = {
+            category: "UPSTREAM_REQUEST_TOO_LARGE",
+            quotaScope: "per_minute",
+          };
         throw { status: response.status };
       }
       if (onDelta) return await readCompletionStream(response, signal, onDelta);
@@ -164,6 +215,7 @@ export class CompatibleAdapter implements ModelAdapter {
           model: this.model,
           operation: onDelta ? "generate_stream" : "generate",
         },
+        hint,
       );
     }
   }

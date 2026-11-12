@@ -136,6 +136,7 @@ describe("real embedded PostgreSQL migrations and RLS — no database mocks", ()
       "20261105001704_tool_execution_records.sql",
       "20261105144113_company_catalog_travel_context.sql",
       "20261105154454_session_boundary_hardening.sql",
+      "20261112130000_masar_demo_catalog_public_read.sql",
     ]);
     const tables = await store.db.query<{
       relname: string;

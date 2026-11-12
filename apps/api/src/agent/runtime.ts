@@ -17,6 +17,7 @@ import {
 import { TurnBudgetError, type TurnBudgetReason } from "./budget.js";
 import { estimatedInputTokens, fitModelInput } from "./context.js";
 import { systemPrompt } from "./prompt.js";
+import { replyLanguage, styleIssues, styleNote } from "./style.js";
 
 function stableArguments(value: unknown): string {
   return JSON.stringify(value, (_key, v: unknown) =>
@@ -100,7 +101,8 @@ export class AgentRuntime {
     let calls = 0,
       toolRounds = 0,
       answerOnly = false,
-      repaired = false;
+      repaired = false,
+      restyled = false;
     let forcedReason: TurnBudgetReason | undefined;
     let repairNote = "";
     let providerRecovery = false;
@@ -161,6 +163,7 @@ export class AgentRuntime {
         options.persistent,
         this.config.NODE_ENV === "test",
         this.tools.has("research_destination"),
+        replyLanguage(content),
       ) + conversationalPolicy;
     const input = (
       final: boolean,
@@ -196,8 +199,8 @@ export class AgentRuntime {
     this.emit(run, "run_started");
     try {
       // At most N tool-producing generations, one final response and one
-      // safety rewrite. Provider attempts have their own bounded deadlines.
-      for (let step = 0; step < this.config.MAX_AGENT_TOOL_ROUNDS + 2; step++) {
+      // safety rewrite plus one style rewrite. Provider attempts have their own bounded deadlines.
+      for (let step = 0; step < this.config.MAX_AGENT_TOOL_ROUNDS + 3; step++) {
         checkAbort();
         const remaining =
           this.config.MAX_TURN_TOKENS -
@@ -329,6 +332,24 @@ export class AgentRuntime {
                 content: output.text,
                 toolCalls: [],
               });
+            continue;
+          }
+          // MASAR style guard: wrong reply language/register, feminine
+          // self-reference, meta talk or pet names → one tools-off rewrite.
+          // A second draft is accepted as-is (never blocks the answer).
+          const style =
+            restyled || !this.config.ENABLE_STYLE_GUARD
+              ? []
+              : styleIssues(output.text, content);
+          if (style.length) {
+            restyled = true;
+            answerOnly = true;
+            repairNote = styleNote(style, content);
+            messages.push({
+              role: "assistant",
+              content: output.text,
+              toolCalls: [],
+            });
             continue;
           }
           // Admission was checked BEFORE the request. A complete validated
@@ -472,6 +493,14 @@ export class AgentRuntime {
             run.usage.inputTokens +
             " outputTokens=" +
             run.usage.outputTokens +
+            // Provider/model, category, upstream status and quota window only.
+            " attempts=" +
+            (run.providerFailures ?? [])
+              .map(
+                (f) =>
+                  `${f.provider}/${f.model}:${f.category}:${f.upstreamStatus ?? "-"}:${f.quotaScope}`,
+              )
+              .join(",") +
             "\n",
         );
       run.status = canceled ? "canceled" : "failed";
@@ -489,9 +518,19 @@ export class AgentRuntime {
               ? "I could not confirm that update safely. Please clarify the missing information; the confirmed details are unchanged."
               : "مقدرتش أأكد التعديل بأمان. محتاج توضيح المعلومة الناقصة؛ التفاصيل المؤكدة لسه زي ما هي."
             : code === "PROVIDER_QUOTA"
-              ? locale === "en"
-                ? "The AI service has reached its usage limit. Please try later; no new answer was completed."
-                : "خدمة الذكاء الاصطناعي وصلت لحد الاستخدام. جرّب لاحقًا؛ مفيش رد جديد مكتمل."
+              ? // Only after the whole Gemini chain and Groq were tried or resting.
+                (run.providerFailures ?? []).some(
+                  (f) => f.category === "PROVIDER_QUOTA",
+                ) &&
+                (run.providerFailures ?? [])
+                  .filter((f) => f.category === "PROVIDER_QUOTA")
+                  .every((f) => f.quotaScope === "daily")
+                ? locale === "en"
+                  ? "Today's free AI quota is used up on every available model. Your message is still in the box; please try again after the daily reset."
+                  : "الحد اليومي المجاني لكل نماذج الذكاء الاصطناعي المتاحة خلص النهارده. رسالتك لسه في الخانة؛ جرّب تاني بعد ما الحد يتجدد."
+                : locale === "en"
+                  ? "All AI models are busy right now (per-minute limit). Your message is still in the box; try again in about a minute."
+                  : "كل نماذج الذكاء الاصطناعي عليها ضغط دلوقتي (حد الطلبات في الدقيقة). رسالتك لسه في الخانة؛ جرّب تاني بعد حوالي دقيقة."
               : ["PROVIDER_UNAVAILABLE", "PROVIDER_TIMEOUT"].includes(code)
                 ? locale === "en"
                   ? "The AI service could not finish this reply right now. You can continue in this conversation; no new answer was completed."

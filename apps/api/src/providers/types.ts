@@ -11,7 +11,7 @@ export type ModelMessage =
       role: "assistant";
       content: string;
       toolCalls: ToolCall[];
-      native?: { provider: string; parts: unknown };
+      native?: { provider: string; model?: string; parts: unknown };
     }
   | { role: "tool"; callId: string; name: string; result: ToolResult };
 export interface ToolDefinition {
@@ -27,7 +27,7 @@ export interface ModelInput {
   toolChoice?: "required";
 }
 export interface Generation extends ModelOutput {
-  native?: { provider: string; parts: unknown };
+  native?: { provider: string; model?: string; parts: unknown };
 }
 export interface ModelAdapter {
   readonly id: string;

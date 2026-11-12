@@ -1,0 +1,84 @@
+diff --git a/docs/proposals/session_boundary_format_only.sql.txt b/supabase/migrations/proposed/20261105154454_session_boundary_hardening.sql
+index 95c9d75..97db29b 100644
+--- a/docs/proposals/session_boundary_format_only.sql.txt
++++ b/supabase/migrations/proposed/20261105154454_session_boundary_hardening.sql
+@@ -1,27 +1,66 @@
+--- PROPOSAL ONLY. Never apply remotely before exact review/approval.
+--- Reject sessionless/malformed JWT session IDs without adding privileged table access.
++-- LOCAL-VERIFIED PROPOSAL ONLY. Remote execution requires explicit approval.
++-- Caller-bound boolean lookup; no Auth rows/credentials are exposed to application roles.
++do $owner_check$
++begin
++  if not exists(select 1 from pg_roles where rolname='postgres' and (rolbypassrls or rolsuper))
++  then raise exception 'SESSION_VALIDATOR_OWNER_PREREQUISITE'; end if;
++end $owner_check$;
++
++create function sadeeman_private.current_session_valid() returns boolean
++language plpgsql stable security definer set search_path='' as $$
++declare
++  claims jsonb;
++  current_uid uuid;
++  current_sid uuid;
++begin
++  claims:=nullif(current_setting('request.jwt.claims',true),'')::jsonb;
++  current_uid:=(select auth.uid());
++  if current_uid is null or jsonb_typeof(claims) is distinct from 'object' then return false; end if;
++  if jsonb_typeof(claims->'sub') is distinct from 'string'
++     or (claims->>'sub')::uuid is distinct from current_uid then return false; end if;
++  if jsonb_typeof(claims->'session_id') is distinct from 'string'
++     or coalesce(claims->>'session_id','') !~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
++  then return false; end if;
++  if jsonb_typeof(claims->'exp') is distinct from 'number'
++     or coalesce(claims->>'exp','') !~ '^[0-9]{1,12}$'
++     or (claims->>'exp')::numeric <= extract(epoch from statement_timestamp())
++  then return false; end if;
++  current_sid:=(claims->>'session_id')::uuid;
++  return exists(
++    select 1 from auth.sessions s
++    where s.id=current_sid and s.user_id=current_uid
++      and (s.not_after is null or s.not_after>statement_timestamp())
++  ) and not exists(
++    select 1 from public.sadeeman_session_revocations r where r.session_id=current_sid
++  );
++exception when invalid_text_representation or numeric_value_out_of_range then
++  return false;
++end
++$$;
++alter function sadeeman_private.current_session_valid() owner to postgres;
++revoke all on function sadeeman_private.current_session_valid() from public,anon,authenticated;
++grant execute on function sadeeman_private.current_session_valid() to authenticated;
++
+ create or replace function public.sadeeman_session_active() returns boolean
+ language sql stable security invoker set search_path='' as $$
+-  select (select auth.uid()) is not null and case
+-    when coalesce(nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'session_id','')
+-      ~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+-    then not exists(
+-      select 1 from public.sadeeman_session_revocations
+-      where session_id=(nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'session_id')::uuid
+-    )
+-    else false
+-  end
++  select sadeeman_private.current_session_valid()
+ $$;
+--- Preserve guest/self read behavior; only the INSERT check becomes narrower.
++
++-- The private owner reads revocations without RLS recursion. Invalid sessions cannot
++-- read revocation metadata; a different valid session can still read its owner's rows.
+ alter policy own_sessions on public.sadeeman_session_revocations to authenticated
++using (
++  owner_id=(select auth.uid()) and tenant_id=(select auth.uid())
++  and (select sadeeman_private.current_session_valid())
++)
+ with check (
+   owner_id=(select auth.uid()) and tenant_id=(select auth.uid())
++  and (select sadeeman_private.current_session_valid())
+   and session_id=(select case
+     when coalesce(nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'session_id','')
+       ~ '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+     then (nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'session_id')::uuid
+     else null end)
+ );
+--- Trigger functions need no public direct-call surface. Existing triggers remain installed.
+ revoke execute on function sadeeman_private.guard_consent() from public,anon,authenticated;
+ revoke execute on function sadeeman_private.guard_memory() from public,anon,authenticated;

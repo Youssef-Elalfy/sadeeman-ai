@@ -1,0 +1,29 @@
+[
+  {
+    "id": null,
+    "code": "REPLACE_WITH_APPROVED_PROGRAM_CODE",
+    "title": "REPLACE_WITH_APPROVED_TITLE",
+    "destination": "REPLACE_WITH_VERIFIED_DESTINATION",
+    "aliases": [],
+    "description": null,
+    "days": null,
+    "nights": null,
+    "price": {
+      "amountMinor": null,
+      "currency": null,
+      "basis": "unknown",
+      "forTravellers": null,
+      "verifiedAt": null
+    },
+    "departures": [],
+    "inclusions": [],
+    "exclusions": [],
+    "activities": [],
+    "isDemo": false,
+    "status": "draft",
+    "approval": {
+      "sourceRef": null,
+      "verifiedAt": null
+    }
+  }
+]

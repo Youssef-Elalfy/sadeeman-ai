@@ -13,7 +13,8 @@ const config = loadConfig({
   ENABLE_TRAVEL_CONTEXT: "true",
   ENABLE_TRAVEL_CONTEXT_PERSISTENCE: "true",
   RATE_LIMIT_MAX: "600",
-  GUEST_RATE_LIMIT_MAX: "30",
+  GUEST_RATE_LIMIT_MAX: "300",
+  MAX_GUESTS_PER_HOUR: "300",
 });
 const app = await buildServer({
   config,

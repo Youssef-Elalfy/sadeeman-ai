@@ -12,7 +12,7 @@ const production = {
   SUPABASE_PROJECT_REF: "ujdzysbowngtkwndgoqf",
   SUPABASE_URL: "https://ujdzysbowngtkwndgoqf.supabase.co",
   SUPABASE_PUBLISHABLE_KEY: "sb_publishable_TEST_ONLY",
-  WEB_ORIGIN: "https://sadeeman-ai.vercel.app",
+  WEB_ORIGIN: "https://sadeeman-web-production.up.railway.app",
   ENABLE_REAL_PROVIDER: "true",
   ENABLE_SUPABASE_GUEST: "true",
   GEMINI_API_KEY: "TEST_ONLY_GEMINI",
@@ -32,7 +32,9 @@ describe("production release prerequisites", () => {
   });
   it.each([
     { WEB_ORIGIN: "http://localhost:3000" },
-    { WEB_ORIGIN: "https://sadeeman-ai.vercel.app/path" },
+    { WEB_ORIGIN: "https://sadeeman-web-production.up.railway.app/path" },
+    { WEB_ORIGIN: "https://sadeeman-ai.vercel.app" },
+    { WEB_ORIGIN: "https://up.railway.app.evil.example" },
     { PERSISTENCE_MODE: "local" },
     {
       SUPABASE_PROJECT_REF: "aaaaaaaaaaaaaaaaaaaa",

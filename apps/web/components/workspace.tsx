@@ -95,6 +95,9 @@ export function Workspace() {
     [],
   );
   const request = useRef<AbortController | null>(null),
+    // True while startup re-validates a stored token: a stale guest token
+    // (e.g. after the server's database changed) is dropped silently.
+    quietExpiry = useRef(false),
     runId = useRef(""),
     bottom = useRef<HTMLDivElement>(null);
   const reloadHistory = useCallback(async () => {
@@ -117,13 +120,22 @@ export function Workspace() {
       try {
         const h = await api("/health", Health, "GET", undefined, signal);
         setHealth(h);
-        if (token())
-          await establish().catch((e: unknown) => {
-            // Only a definitive auth rejection ends the session; a 429 or a
-            // network blip must not log the user out.
-            if (e instanceof ApiFailure && e.status === 401) saveToken("");
-            setAuthenticated(false);
-          });
+        const stored = token();
+        if (stored) {
+          quietExpiry.current = true;
+          await establish()
+            .catch((e: unknown) => {
+              // Only a definitive auth rejection ends the session; a 429 or a
+              // network blip must not log the user out. Never clear a newer
+              // token created meanwhile by a send.
+              if (token() !== stored) return;
+              if (e instanceof ApiFailure && e.status === 401) saveToken("");
+              setAuthenticated(false);
+            })
+            .finally(() => {
+              quietExpiry.current = false;
+            });
+        }
       } catch (e) {
         if (signal?.aborted) return;
         if (e instanceof ApiFailure && e.status > 0 && e.code !== "NETWORK") {
@@ -162,6 +174,7 @@ export function Workspace() {
     };
     onHash();
     const onExpired = () => {
+      if (quietExpiry.current) return;
       saveToken("");
       setAuthenticated(false);
       setHistory([]);

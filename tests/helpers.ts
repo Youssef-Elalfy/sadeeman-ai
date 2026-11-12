@@ -12,6 +12,8 @@ import { LocalState } from "../apps/api/src/state.js";
 export const testConfig = (overrides: Partial<Config> = {}): Config => ({
   ...loadConfig({ NODE_ENV: "test" }),
   PROVIDER_RETRIES: 0,
+  // Scripted answers are placeholders; style rewrites are tested explicitly.
+  ENABLE_STYLE_GUARD: false,
   ...overrides,
 });
 export function answer(text = "Synthetic test answer"): ModelOutput {

@@ -79,6 +79,11 @@ beforeAll(() => {
       includeProposed: true,
       allowCatalogDemo: true,
     });
+    // Isolate these fixture tests from the seeded MASAR demo rows (covered in
+    // tests/masar-catalog.test.ts). Scratch test database only.
+    await store.db.exec(
+      "delete from public.sadeeman_company_packages where code like 'masar-demo-%'",
+    );
     identity = await store.authenticate(
       `Bearer ${(await store.guest()).token}`,
     );

@@ -118,4 +118,35 @@ describe("Gemini SDK wire contract — SDK mocked only inside this file", () => 
     await expect(promise).rejects.toMatchObject({ code: "PROVIDER_QUOTA" });
     await expect(promise).rejects.not.toThrow("secret");
   });
+  it("falls through the model chain once on 503 and sticks to the working model", async () => {
+    const ok = {
+      candidates: [
+        { content: { role: "model", parts: [{ text: "TEST ONLY" }] } },
+      ],
+    };
+    sdk.generate
+      .mockRejectedValueOnce({ status: 503, message: "overloaded" })
+      .mockResolvedValueOnce(ok)
+      .mockResolvedValueOnce(ok);
+    const adapter = new GeminiAdapter("test", "model-a, model-b", 1000, {
+      generateContent: sdk.generate,
+    });
+    const signal = new AbortController().signal;
+    expect((await adapter.generate(input, signal)).text).toBe("TEST ONLY");
+    await adapter.generate(input, signal);
+    expect(sdk.generate.mock.calls.map((c) => c[0].model)).toEqual([
+      "model-a",
+      "model-b",
+      "model-b",
+    ]);
+  });
+  it("does not walk the chain on auth errors", async () => {
+    sdk.generate.mockRejectedValueOnce({ status: 401, message: "denied" });
+    await expect(
+      new GeminiAdapter("test", "model-a,model-b", 1000, {
+        generateContent: sdk.generate,
+      }).generate(input, new AbortController().signal),
+    ).rejects.toMatchObject({ code: "PROVIDER_AUTH" });
+    expect(sdk.generate).toHaveBeenCalledTimes(1);
+  });
 });

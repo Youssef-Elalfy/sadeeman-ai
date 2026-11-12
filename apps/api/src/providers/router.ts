@@ -2,7 +2,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import { ModelOutput, type ProviderFailure } from "@sadeeman/contracts";
 import { fitModelInput, forProvider } from "../agent/context.js";
 import type { Config } from "../config.js";
-import { SafeError, safeError } from "../errors.js";
+import { cooldownMs, SafeError, safeError } from "../errors.js";
 import { CompatibleAdapter } from "./compatible.js";
 import { GeminiAdapter } from "./gemini.js";
 import type { Generation, ModelAdapter, ModelInput } from "./types.js";
@@ -236,13 +236,16 @@ export class ModelRouter {
 
           circuit.failures++;
 
-          circuit.openUntil = ["PROVIDER_QUOTA", "PROVIDER_AUTH"].includes(
-            last.code,
-          )
-            ? Date.now() + this.config.PROVIDER_QUOTA_COOLDOWN_MS
-            : circuit.failures >= 3
-              ? Date.now() + 30000
-              : 0;
+          // Rate limits rest for their real window (per-minute ≥ 30 s,
+          // daily until reset); auth problems use the configured cooldown.
+          circuit.openUntil =
+            last.code === "PROVIDER_QUOTA"
+              ? Date.now() + cooldownMs(last)
+              : last.code === "PROVIDER_AUTH"
+                ? Date.now() + this.config.PROVIDER_QUOTA_COOLDOWN_MS
+                : circuit.failures >= 3
+                  ? Date.now() + 30000
+                  : 0;
 
           this.circuits.set(adapter.id, circuit);
 
